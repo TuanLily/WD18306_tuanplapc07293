@@ -84,67 +84,67 @@
   "products": [
     {
       "id": 1,
-      "name": "Cà rốt",
+      "name": "Cam",
       "cate_id": 1,
       "price": "30000",
       "detail": "some comment",
-      "image": 1
+      "image": "public/img/best-product-1.jpg"
     },
     {
       "id": 2,
-      "name": "Táo",
+      "name": "Dâu",
       "cate_id": 1,
       "price": "25000",
       "detail": "fresh and crunchy",
-      "image": 2
+      "image": "public/img/best-product-2.jpg"
     },
     {
       "id": 3,
-      "name": "Cần tây",
+      "name": "Chuối",
       "cate_id": 2,
       "price": "35000",
       "detail": "rich in vitamins",
-      "image": 3
+      "image": "public/img/best-product-3.jpg"
     },
     {
       "id": 4,
-      "name": "Nước ép cam",
+      "name": "Quả mơ",
       "cate_id": 4,
       "price": "50000",
       "detail": "100% pure orange juice",
-      "image": 4
+      "image": "public/img/best-product-4.jpg"
     },
     {
       "id": 5,
-      "name": "Mì xào rau củ",
+      "name": "Nho",
       "cate_id": 6,
       "price": "45000",
       "detail": "delicious stir-fried noodles with vegetables",
-      "image": 5
+      "image": "public/img/best-product-5.jpg"
     },
     {
       "id": 6,
-      "name": "Bánh ngọt hạt dẻ cười",
+      "name": "Táo",
       "cate_id": 7,
       "price": "20000",
       "detail": "sweet and nutty delight",
-      "image": 6
+      "image": "public/img/best-product-6.jpg"
     },
     {
       "id": 7,
-      "name": "Cơm chín ráp",
+      "name": "Dâu tây",
       "cate_id": 6,
       "price": "25000",
       "detail": "perfectly cooked rice grains",
-      "image": 7
+      "image": "public/img/featur-2.jpg"
     },
     {
       "id": 8,
-      "name": "Bánh mì sandwich thịt gà",
+      "name": "Bông cải xanh",
       "cate_id": 8,
       "price": "30000",
       "detail": "satisfying chicken sandwich",
-      "image": 8
+      "image": "public/img/featur-3.jpg"
     },
     {
       "id": 9,
@@ -152,23 +152,23 @@
       "cate_id": 9,
       "price": "40000",
       "detail": "organically grown vegetables",
-      "image": 9
+      "image": "public/img/hero-img-1.jpg"
     },
     {
       "id": 10,
-      "name": "Hạt điều rang muối",
+      "name": "Khoai tây",
       "cate_id": 10,
       "price": "60000",
       "detail": "crispy and salted cashews",
-      "image": 10
+      "image": "public/img/vegetable-item-5.jpg"
     },
     {
       "id": 11,
-      "name": "Sữa tắm hương trái cây",
+      "name": "Cần tây",
       "cate_id": 11,
       "price": "35000",
       "detail": "refreshing fruit-scented body wash",
-      "image": 11
+      "image": "public/img/vegetable-item-6.jpg"
     },
     {
       "id": 12,
@@ -176,7 +176,7 @@
       "cate_id": 12,
       "price": "120000",
       "detail": "energy-efficient lighting solution",
-      "image": 12
+      "image": ""
     },
     {
       "id": 13,
@@ -184,7 +184,7 @@
       "cate_id": 13,
       "price": "75000",
       "detail": "stylish red button-up shirt",
-      "image": 13
+      "image": ""
     },
     {
       "id": 14,
@@ -192,7 +192,7 @@
       "cate_id": 14,
       "price": "50000",
       "detail": "essential kitchen tools set",
-      "image": 14
+      "image": ""
     },
     {
       "id": 15,
@@ -200,7 +200,7 @@
       "cate_id": 15,
       "price": "10000",
       "detail": "compact notebook for jotting down notes",
-      "image": 15
+      "image": ""
     },
     {
       "id": 16,
@@ -208,7 +208,7 @@
       "cate_id": 16,
       "price": "80000",
       "detail": "popular toy for kids",
-      "image": 16
+      "image": ""
     },
     {
       "id": 17,
@@ -216,7 +216,7 @@
       "cate_id": 17,
       "price": "15000",
       "detail": "durable tennis ball for sports",
-      "image": 17
+      "image": ""
     },
     {
       "id": 18,
@@ -224,7 +224,7 @@
       "cate_id": 18,
       "price": "25000",
       "detail": "soft and absorbent bath towel",
-      "image": 18
+      "image": ""
     },
     {
       "id": 19,
@@ -232,7 +232,7 @@
       "cate_id": 19,
       "price": "30000",
       "detail": "ornamental plant decor",
-      "image": 19
+      "image": ""
     },
     {
       "id": 20,
@@ -240,7 +240,7 @@
       "cate_id": 20,
       "price": "80000",
       "detail": "wireless headphones for convenience",
-      "image": 20
+      "image": ""
     },
     {
       "id": 21,
@@ -248,7 +248,7 @@
       "cate_id": 1,
       "price": "40000",
       "detail": "creamy and nutritious avocado",
-      "image": 21
+      "image": ""
     },
     {
       "id": 22,
@@ -256,7 +256,7 @@
       "cate_id": 1,
       "price": "35000",
       "detail": "sweet and juicy red grapes",
-      "image": 22
+      "image": ""
     },
     {
       "id": 23,
@@ -264,7 +264,7 @@
       "cate_id": 2,
       "price": "30000",
       "detail": "crisp and mild white turnips",
-      "image": 23
+      "image": ""
     },
     {
       "id": 24,
@@ -272,7 +272,7 @@
       "cate_id": 4,
       "price": "10000",
       "detail": "pure and refreshing water",
-      "image": 24
+      "image": ""
     },
     {
       "id": 25,
@@ -280,7 +280,7 @@
       "cate_id": 6,
       "price": "55000",
       "detail": "traditional Vietnamese beef noodle soup",
-      "image": 25
+      "image": ""
     },
     {
       "id": 26,
@@ -288,7 +288,7 @@
       "cate_id": 7,
       "price": "25000",
       "detail": "crunchy sesame seed snack",
-      "image": 26
+      "image": ""
     },
     {
       "id": 27,
@@ -296,7 +296,7 @@
       "cate_id": 6,
       "price": "30000",
       "detail": "nutrient-rich brown rice",
-      "image": 27
+      "image": ""
     },
     {
       "id": 28,
@@ -304,7 +304,7 @@
       "cate_id": 8,
       "price": "35000",
       "detail": "healthy chicken and vegetable sandwich",
-      "image": 28
+      "image": ""
     },
     {
       "id": 29,
@@ -312,7 +312,7 @@
       "cate_id": 9,
       "price": "45000",
       "detail": "fresh organic vegetables",
-      "image": 29
+      "image": ""
     },
     {
       "id": 30,
@@ -320,7 +320,7 @@
       "cate_id": 10,
       "price": "70000",
       "detail": "a delightful mix of cashews and peanuts",
-      "image": 30
+      "image": ""
     },
     {
       "id": 31,
@@ -328,7 +328,7 @@
       "cate_id": 11,
       "price": "40000",
       "detail": "citrus-scented body wash with bergamot essence",
-      "image": 31
+      "image": ""
     },
     {
       "id": 32,
@@ -336,7 +336,7 @@
       "cate_id": 12,
       "price": "150000",
       "detail": "ambient lighting for bedroom decor",
-      "image": 32
+      "image": ""
     },
     {
       "id": 33,
@@ -344,7 +344,7 @@
       "cate_id": 13,
       "price": "90000",
       "detail": "classic navy blue polo shirt",
-      "image": 33
+      "image": ""
     },
     {
       "id": 34,
@@ -352,7 +352,7 @@
       "cate_id": 14,
       "price": "70000",
       "detail": "stainless steel kitchen utensils",
-      "image": 34
+      "image": ""
     },
     {
       "id": 35,
@@ -360,7 +360,7 @@
       "cate_id": 15,
       "price": "12000",
       "detail": "pastel-colored notebook for creative notes",
-      "image": 35
+      "image": ""
     },
     {
       "id": 36,
@@ -368,7 +368,7 @@
       "cate_id": 16,
       "price": "100000",
       "detail": "princess-themed Barbie doll",
-      "image": 36
+      "image": ""
     },
     {
       "id": 37,
@@ -376,7 +376,7 @@
       "cate_id": 17,
       "price": "25000",
       "detail": "high-quality professional tennis ball",
-      "image": 37
+      "image": ""
     },
     {
       "id": 38,
@@ -384,7 +384,7 @@
       "cate_id": 18,
       "price": "35000",
       "detail": "luxurious and soft premium bath towel",
-      "image": 38
+      "image": ""
     },
     {
       "id": 39,
@@ -392,7 +392,7 @@
       "cate_id": 19,
       "price": "25000",
       "detail": "miniature plant decor for small spaces",
-      "image": 39
+      "image": ""
     },
     {
       "id": 40,
@@ -400,7 +400,7 @@
       "cate_id": 20,
       "price": "120000",
       "detail": "noise-canceling Bluetooth headphones",
-      "image": 40
+      "image": ""
     },
     {
       "id": 41,
@@ -408,7 +408,7 @@
       "cate_id": 1,
       "price": "45000",
       "detail": "refreshing watermelon slices",
-      "image": 41
+      "image": ""
     },
     {
       "id": 42,
@@ -416,7 +416,7 @@
       "cate_id": 1,
       "price": "30000",
       "detail": "sticky rice for traditional Vietnamese dish",
-      "image": 42
+      "image": ""
     },
     {
       "id": 43,
@@ -424,7 +424,7 @@
       "cate_id": 2,
       "price": "20000",
       "detail": "plump and juicy tomatoes",
-      "image": 43
+      "image": ""
     },
     {
       "id": 44,
@@ -432,7 +432,7 @@
       "cate_id": 4,
       "price": "15000",
       "detail": "mineral-rich purified water",
-      "image": 44
+      "image": ""
     },
     {
       "id": 45,
@@ -440,7 +440,7 @@
       "cate_id": 6,
       "price": "60000",
       "detail": "Vietnamese crab noodle soup with vermicelli",
-      "image": 45
+      "image": ""
     },
     {
       "id": 46,
@@ -448,7 +448,7 @@
       "cate_id": 7,
       "price": "25000",
       "detail": "crispy almond cookies",
-      "image": 46
+      "image": ""
     },
     {
       "id": 47,
@@ -456,7 +456,7 @@
       "cate_id": 6,
       "price": "35000",
       "detail": "organic brown rice",
-      "image": 47
+      "image": ""
     },
     {
       "id": 48,
@@ -464,7 +464,7 @@
       "cate_id": 8,
       "price": "40000",
       "detail": "tasty tuna sandwich",
-      "image": 48
+      "image": ""
     },
     {
       "id": 49,
@@ -472,7 +472,7 @@
       "cate_id": 9,
       "price": "45000",
       "detail": "fresh organic vegetables",
-      "image": 49
+      "image": ""
     },
     {
       "id": 50,
