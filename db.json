@@ -88,7 +88,7 @@
       "cate_id": 1,
       "price": "30000",
       "detail": "some comment",
-      "image": "public/img/best-product-1.jpg"
+      "image": "best-product-1.jpg"
     },
     {
       "id": 2,
@@ -96,7 +96,7 @@
       "cate_id": 1,
       "price": "25000",
       "detail": "fresh and crunchy",
-      "image": "public/img/best-product-2.jpg"
+      "image": "best-product-2.jpg"
     },
     {
       "id": 3,
@@ -104,7 +104,7 @@
       "cate_id": 2,
       "price": "35000",
       "detail": "rich in vitamins",
-      "image": "public/img/best-product-3.jpg"
+      "image": "best-product-3.jpg"
     },
     {
       "id": 4,
@@ -112,7 +112,7 @@
       "cate_id": 4,
       "price": "50000",
       "detail": "100% pure orange juice",
-      "image": "public/img/best-product-4.jpg"
+      "image": "best-product-4.jpg"
     },
     {
       "id": 5,
@@ -120,7 +120,7 @@
       "cate_id": 6,
       "price": "45000",
       "detail": "delicious stir-fried noodles with vegetables",
-      "image": "public/img/best-product-5.jpg"
+      "image": "best-product-5.jpg"
     },
     {
       "id": 6,
@@ -128,7 +128,7 @@
       "cate_id": 7,
       "price": "20000",
       "detail": "sweet and nutty delight",
-      "image": "public/img/best-product-6.jpg"
+      "image": "best-product-6.jpg"
     },
     {
       "id": 7,
@@ -136,7 +136,7 @@
       "cate_id": 6,
       "price": "25000",
       "detail": "perfectly cooked rice grains",
-      "image": "public/img/featur-2.jpg"
+      "image": "featur-2.jpg"
     },
     {
       "id": 8,
@@ -144,7 +144,7 @@
       "cate_id": 8,
       "price": "30000",
       "detail": "satisfying chicken sandwich",
-      "image": "public/img/featur-3.jpg"
+      "image": "featur-3.jpg"
     },
     {
       "id": 9,
@@ -152,7 +152,7 @@
       "cate_id": 9,
       "price": "40000",
       "detail": "organically grown vegetables",
-      "image": "public/img/hero-img-1.jpg"
+      "image": "pngegg (4).png"
     },
     {
       "id": 10,
@@ -160,7 +160,7 @@
       "cate_id": 10,
       "price": "60000",
       "detail": "crispy and salted cashews",
-      "image": "public/img/vegetable-item-5.jpg"
+      "image": "vegetable-item-5.jpg"
     },
     {
       "id": 11,
@@ -168,7 +168,7 @@
       "cate_id": 11,
       "price": "35000",
       "detail": "refreshing fruit-scented body wash",
-      "image": "public/img/vegetable-item-6.jpg"
+      "image": "vegetable-item-6.jpg"
     },
     {
       "id": 12,
@@ -176,7 +176,7 @@
       "cate_id": 12,
       "price": "120000",
       "detail": "energy-efficient lighting solution",
-      "image": ""
+      "image": "pngegg.png"
     },
     {
       "id": 13,
@@ -184,7 +184,7 @@
       "cate_id": 13,
       "price": "75000",
       "detail": "stylish red button-up shirt",
-      "image": ""
+      "image": "pngegg (1).png"
     },
     {
       "id": 14,
@@ -192,7 +192,7 @@
       "cate_id": 14,
       "price": "50000",
       "detail": "essential kitchen tools set",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 15,
@@ -200,7 +200,7 @@
       "cate_id": 15,
       "price": "10000",
       "detail": "compact notebook for jotting down notes",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 16,
@@ -208,7 +208,7 @@
       "cate_id": 16,
       "price": "80000",
       "detail": "popular toy for kids",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 17,
@@ -216,7 +216,7 @@
       "cate_id": 17,
       "price": "15000",
       "detail": "durable tennis ball for sports",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 18,
@@ -224,7 +224,7 @@
       "cate_id": 18,
       "price": "25000",
       "detail": "soft and absorbent bath towel",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 19,
@@ -232,7 +232,7 @@
       "cate_id": 19,
       "price": "30000",
       "detail": "ornamental plant decor",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 20,
@@ -240,7 +240,7 @@
       "cate_id": 20,
       "price": "80000",
       "detail": "wireless headphones for convenience",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 21,
@@ -248,7 +248,7 @@
       "cate_id": 1,
       "price": "40000",
       "detail": "creamy and nutritious avocado",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 22,
@@ -256,7 +256,7 @@
       "cate_id": 1,
       "price": "35000",
       "detail": "sweet and juicy red grapes",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 23,
@@ -264,7 +264,7 @@
       "cate_id": 2,
       "price": "30000",
       "detail": "crisp and mild white turnips",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 24,
@@ -272,7 +272,7 @@
       "cate_id": 4,
       "price": "10000",
       "detail": "pure and refreshing water",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 25,
@@ -280,7 +280,7 @@
       "cate_id": 6,
       "price": "55000",
       "detail": "traditional Vietnamese beef noodle soup",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 26,
@@ -288,7 +288,7 @@
       "cate_id": 7,
       "price": "25000",
       "detail": "crunchy sesame seed snack",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 27,
@@ -296,7 +296,7 @@
       "cate_id": 6,
       "price": "30000",
       "detail": "nutrient-rich brown rice",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 28,
@@ -304,7 +304,7 @@
       "cate_id": 8,
       "price": "35000",
       "detail": "healthy chicken and vegetable sandwich",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 29,
@@ -312,7 +312,7 @@
       "cate_id": 9,
       "price": "45000",
       "detail": "fresh organic vegetables",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 30,
@@ -320,7 +320,7 @@
       "cate_id": 10,
       "price": "70000",
       "detail": "a delightful mix of cashews and peanuts",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 31,
@@ -328,7 +328,7 @@
       "cate_id": 11,
       "price": "40000",
       "detail": "citrus-scented body wash with bergamot essence",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 32,
@@ -336,7 +336,7 @@
       "cate_id": 12,
       "price": "150000",
       "detail": "ambient lighting for bedroom decor",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 33,
@@ -344,7 +344,7 @@
       "cate_id": 13,
       "price": "90000",
       "detail": "classic navy blue polo shirt",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 34,
@@ -352,7 +352,7 @@
       "cate_id": 14,
       "price": "70000",
       "detail": "stainless steel kitchen utensils",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 35,
@@ -360,7 +360,7 @@
       "cate_id": 15,
       "price": "12000",
       "detail": "pastel-colored notebook for creative notes",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 36,
@@ -368,7 +368,7 @@
       "cate_id": 16,
       "price": "100000",
       "detail": "princess-themed Barbie doll",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 37,
@@ -376,7 +376,7 @@
       "cate_id": 17,
       "price": "25000",
       "detail": "high-quality professional tennis ball",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 38,
@@ -384,7 +384,7 @@
       "cate_id": 18,
       "price": "35000",
       "detail": "luxurious and soft premium bath towel",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 39,
@@ -392,7 +392,7 @@
       "cate_id": 19,
       "price": "25000",
       "detail": "miniature plant decor for small spaces",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 40,
@@ -400,7 +400,7 @@
       "cate_id": 20,
       "price": "120000",
       "detail": "noise-canceling Bluetooth headphones",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 41,
@@ -408,7 +408,7 @@
       "cate_id": 1,
       "price": "45000",
       "detail": "refreshing watermelon slices",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 42,
@@ -416,7 +416,7 @@
       "cate_id": 1,
       "price": "30000",
       "detail": "sticky rice for traditional Vietnamese dish",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 43,
@@ -424,7 +424,7 @@
       "cate_id": 2,
       "price": "20000",
       "detail": "plump and juicy tomatoes",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 44,
@@ -432,7 +432,7 @@
       "cate_id": 4,
       "price": "15000",
       "detail": "mineral-rich purified water",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 45,
@@ -440,7 +440,7 @@
       "cate_id": 6,
       "price": "60000",
       "detail": "Vietnamese crab noodle soup with vermicelli",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 46,
@@ -448,7 +448,7 @@
       "cate_id": 7,
       "price": "25000",
       "detail": "crispy almond cookies",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 47,
@@ -456,7 +456,7 @@
       "cate_id": 6,
       "price": "35000",
       "detail": "organic brown rice",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 48,
@@ -464,7 +464,7 @@
       "cate_id": 8,
       "price": "40000",
       "detail": "tasty tuna sandwich",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 49,
@@ -472,14 +472,15 @@
       "cate_id": 9,
       "price": "45000",
       "detail": "fresh organic vegetables",
-      "image": ""
+      "image": "pngegg (3).png"
     },
     {
       "id": 50,
       "name": "Hạt hạnh nhân và hạt dẻ cười hỗn hợp",
       "cate_id": 10,
       "price": "70000",
-      "detail": "fresh organic vegetables"
+      "detail": "fresh organic vegetables",
+      "image": "pngegg (3).png"
     }
   ],
   "orders": [
