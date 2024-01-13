@@ -178,3 +178,5 @@ function closeCartPopup() {
         cartPopup.classList.remove('fade-out');
     }, 300); // 300ms là thời gian của hiệu ứng fade-out
 }
+
+

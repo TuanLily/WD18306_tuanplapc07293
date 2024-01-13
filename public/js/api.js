@@ -1,3 +1,17 @@
+// const API_URL = "http://localhost:3000/";
+
+// // Function to fetch data from the API
+// const fetchData = () => {
+//     return fetch(API_URL + "products")
+//         .then((response) => response.json())
+//         .then((data) => {
+//             displayData(data);
+//         })
+//         .catch((error) => {
+//             console.error("Error fetching data:", error);
+//         });
+// };
+
 const API_URL = "http://localhost:3000/";
 
 // Function to fetch data from the API
@@ -10,12 +24,11 @@ const fetchData = async () => {
         console.error("Error fetching data:", error);
     }
 };
-
 const displayData = (data) => {
     const productsData = document.querySelector(".products-data");
 
     data.forEach((item) => {
-        console.log(item);
+        // console.log(item);
         const imageUrl = item.image ? `/img/${item.image}` : ''; // Thay thế bằng hình ảnh mặc định
         const viPrice = new Intl.NumberFormat('vi-VN', {
             style: 'currency',
@@ -32,14 +45,13 @@ const displayData = (data) => {
                         <img src="${imageUrl}" class="img-fluid w-100 rounded-top" alt="IMG">
                     </div>
                     <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px">
-                        ${item.cate_id}
+                        ${item.cate_id} 
                     </div>
                     <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                         <h4>${item.name}</h4>
-                        <p>${item.detail}</p>
                         <div class="d-flex justify-content-between flex-lg-wrap">
                             <p class="text-dark fs-5 fw-bold mb-0">
-                                ${formattedPrice} bsjhfbdshjfghsdjfg/ kg
+                                ${formattedPrice} / kg
                             </p>
                             <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
                                 <i class="fa fa-shopping-bag me-2 text-primary"></i>
@@ -55,4 +67,7 @@ const displayData = (data) => {
     });
 };
 
+// Gọi fetchData và xử lý kết quả
 fetchData();
+
+
