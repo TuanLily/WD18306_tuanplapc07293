@@ -3,7 +3,7 @@
 const adminController = {};
 
 adminController.showDashboardPage = (req, res) => {
-    res.render('administrator/index')
+    res.render('admin/index')
 }
 
 adminController.showMorePageAdmin = (req, res) => {
@@ -11,7 +11,7 @@ adminController.showMorePageAdmin = (req, res) => {
 
     // Kiểm tra xem trang có tồn tại hay không
     if (isPageAdminExists(page)) {
-        res.render(`administrator/${page}`);
+        res.render(`admin/${page}`);
     } else {
         // Nếu không tồn tại, chuyển hướng hoặc hiển thị trang 404
         res.render('error/404');

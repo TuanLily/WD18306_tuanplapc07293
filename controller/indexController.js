@@ -10,7 +10,7 @@ controller.showMorePage = (req, res) => {
 
     // Kiểm tra xem trang có tồn tại hay không
     if (isPageExists(page)) {
-        res.render(`client/${page}Ư`);
+        res.render(`client/${page}`);
     } else {
         // Nếu không tồn tại, chuyển hướng hoặc hiển thị trang 404
         res.render('error/404');
