@@ -2,7 +2,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Fruitables - Vegetable Website Template</title>
+  <title>SFURITS</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <meta content="" name="keywords" />
   <meta content="" name="description" />
@@ -27,21 +27,37 @@
   <!-- Logo -->
   <link rel="icon" href="img/logo.png" type="image/x-icon" />
 
+  {{!-- Axios packet --}}
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
   <!-- Template Stylesheet -->
   <link href="public/css/style.css" rel="stylesheet" />
 </head>
 
 <body>
 
+
+  {{#if isHomePage}}
   {{> header}}
-
   {{{body}}}
-
+  {{> footer}}
+  {{else}}
+  {{#if isSignInPage}}
+  {{>signIn}}
+  {{else}}
+  {{#if isSignUpPage}}
+  {{> signUp}}
+  {{else}}
+  {{#if is404Page}}
+  {{> header}}
+  {{> admin404}}
   {{> footer}}
 
-
-
-
+  {{/if}}
+  {{/if}}
+  {{/if}}
+  {{/if}}
 
 
   <!-- JavaScript Libraries -->
@@ -54,7 +70,7 @@
 
   <!-- Template Javascript -->
   <script src="public/js/main.js"></script>
-  <script src="public/js/api.js"></script>
+  <script type="module" src="public/js/api.js"></script>
 
 </body>
 

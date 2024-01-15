@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>DASHMIN - Bootstrap Admin Template</title>
+    <title>SFURITS - Dashboard Admin </title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -26,6 +26,11 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    {{!-- font-awesome --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     {{!-- Logo --}}
     <link rel="icon" href="img/logo.png" type="image/x-icon" />
@@ -52,7 +57,22 @@
             {{> admin_navbar}}
             <!-- Navbar End -->
 
+            <!-- Body Start -->
+
+            {{#if isHomePage}}
             {{{body}}}
+            {{else}}
+            {{#if isListPage}}
+            {{> products/product-list}}
+            {{else}}
+            {{#if is404Page}}
+            {{> admin404}}
+            {{/if}}
+            {{/if}}
+            {{/if}}
+
+            <!-- Body End -->
+
 
             <!-- Footer Start -->
             {{> admin_footer}}

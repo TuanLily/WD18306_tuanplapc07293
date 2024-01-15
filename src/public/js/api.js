@@ -1,21 +1,21 @@
 const API_URL = "http://localhost:3000/";
 
 // Function to fetch data from the API
-const fetchData = async () => {
+const fetchDataProducts = async () => {
     try {
-        const response = await fetch(API_URL + "products");
-        const data = await response.json();
+        const response = await axios.get(API_URL + "products");
+        const data = response.data;
         displayData(data);
     } catch (error) {
         console.error("Error fetching data:", error);
     }
-};
+}; //* Lấy API phần sản phẩm
+
 const displayData = (data) => {
     const productsData = document.querySelector(".products-data");
 
     data.forEach((item) => {
-        // console.log(item);
-        const imageUrl = item.image ? `/img/${item.image}` : ''; // Thay thế bằng hình ảnh mặc định
+        const imageUrl = item.image ? `/img/${item.image}` : '';
         const viPrice = new Intl.NumberFormat('vi-VN', {
             style: 'currency',
             currency: 'VND',
@@ -53,7 +53,45 @@ const displayData = (data) => {
     });
 };
 
-// Gọi fetchData và xử lý kết quả
-fetchData();
+// Call fetchData and handle the result
+fetchDataProducts();
 
 
+const fetchDataCategories = async () => {
+    try {
+        const response = await axios.get(API_URL + "categories");
+        const data = response.data;
+        console.log(data);
+        // displayData(data);
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+}; //* Lấy API phần danh mục
+
+fetchDataCategories();
+
+const fetchDataOrders = async () => {
+    try {
+        const response = await axios.get(API_URL + "orders");
+        const data = response.data;
+        console.log(data);
+        // displayData(data);
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+}; //* Lấy API phần đơn hàng
+
+fetchDataOrders();
+
+const fetchDataOrdersDetails = async () => {
+    try {
+        const response = await axios.get(API_URL + "order_details");
+        const data = response.data;
+        console.log(data);
+        // displayData(data);
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+}; //* Lấy API phần chi tiết đơn hàng
+
+fetchDataOrdersDetails();

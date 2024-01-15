@@ -132,20 +132,36 @@
 
 
     // Product Quantity
-    $('.quantity button').on('click', function () {
-        var button = $(this);
-        var oldValue = button.parent().parent().find('input').val();
-        if (button.hasClass('btn-plus')) {
-            var newVal = parseFloat(oldValue) + 1;
-        } else {
-            if (oldValue > 0) {
-                var newVal = parseFloat(oldValue) - 1;
-            } else {
-                newVal = 0;
+    $(document).ready(function () {
+        $('.quantity input').on('input', function () {
+            var inputValue = $(this).val();
+
+            // Kiểm tra xem giá trị nhập vào có phải là số từ 1 trở lên hay không
+            if (!/^[1-9]\d*$/.test(inputValue)) {
+                // Nếu không phải số từ 1 trở lên, đặt giá trị là 1
+                $(this).val(1);
             }
-        }
-        button.parent().parent().find('input').val(newVal);
+        });
+
+        $('.quantity button').on('click', function () {
+            var button = $(this);
+            var inputField = button.parent().parent().find('input');
+            var oldValue = parseFloat(inputField.val());
+
+            if (button.hasClass('btn-plus')) {
+                // Tăng giá trị
+                var newVal = parseFloat(oldValue) + 1;
+            } else {
+                // Giảm giá trị, nhưng không thể giảm dưới 1
+                var newVal = Math.max(1, parseFloat(oldValue) - 1);
+            }
+
+            // Hiển thị giá trị mới
+            inputField.val(newVal);
+        });
     });
+
+
 
 })(jQuery);
 
@@ -178,20 +194,4 @@ function closeCartPopup() {
         cartPopup.classList.remove('fade-out');
     }, 300); // 300ms là thời gian của hiệu ứng fade-out
 }
-
-
-// Lấy tất cả các liên kết có class 'nav-link' trong navbar
-const navContainer = document.querySelector('.navbar-nav');
-
-// Lắng nghe sự kiện click trên container của các liên kết
-navContainer.addEventListener('click', (event) => {
-    // Kiểm tra xem phần tử được click có class là 'nav-link' hay không
-    if (event.target.classList.contains('nav-link')) {
-        // Loại bỏ lớp active từ tất cả các liên kết
-        document.querySelectorAll('.nav-link').forEach(navLink => navLink.classList.remove('active'));
-
-        // Thêm lớp active cho liên kết được bấm
-        event.target.classList.add('active');
-    }
-});
 
