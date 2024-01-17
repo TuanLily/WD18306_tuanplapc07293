@@ -1,28 +1,52 @@
 const API_URL = "http://localhost:3000/";
 
-// Function to fetch data from the API
-const fetchDataProducts = async () => {
+// Khai báo biến categoriesData ở đầu mã nguồn
+let categoriesData = [];
+
+const fetchData = async (endpoint) => {
     try {
-        const response = await axios.get(API_URL + "products");
+        const response = await axios.get(API_URL + endpoint);
         const data = response.data;
-        displayData(data);
+
+        if (endpoint === 'categories') {
+            categoriesData = data; // Lưu trữ dữ liệu danh mục để sử dụng sau này
+        }
+
+        return data;
     } catch (error) {
         console.error("Error fetching data:", error);
     }
-}; //* Lấy API phần sản phẩm
+};
 
-const displayData = (data) => {
+// Để lấy cả 2 API products và categories thì cần dùng hàm Promise.all
+Promise.all([fetchData("products"), fetchData("categories")])
+    .then(([products, categories]) => {
+        displayData(products, categories);
+    });
+
+const displayData = (products, categories) => {
+    console.log(categories);
+    console.log(products);
     const productsData = document.querySelector(".products-data");
 
-    data.forEach((item) => {
-        const imageUrl = item.image ? `/img/${item.image}` : '';
+    products.forEach((product) => {
+        const imageUrl = product.image ? `/img/${product.image}` : '';
         const viPrice = new Intl.NumberFormat('vi-VN', {
             style: 'currency',
             currency: 'VND',
         });
 
-        const price = item.price;
+        const price = product.price;
         const formattedPrice = viPrice.format(price);
+
+        // Tìm thông tin danh mục tương ứng bằng vòng lặp
+        let categoryName = 'Unknown Category';
+        for (const cat of categories) {
+            if (cat.id === product.cate_id) {
+                categoryName = cat.title;
+                break;
+            }
+        }
 
         const html = `
             <div class="col-md-6 col-lg-4 col-xl-3">
@@ -31,10 +55,10 @@ const displayData = (data) => {
                         <img src="${imageUrl}" class="img-fluid w-100 rounded-top" alt="IMG">
                     </div>
                     <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px">
-                        ${item.cate_id} 
+                        ${categoryName}
                     </div>
                     <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                        <h4>${item.name}</h4>
+                        <h4>${product.name}</h4>
                         <div class="d-flex justify-content-between flex-lg-wrap">
                             <p class="text-dark fs-5 fw-bold mb-0">
                                 ${formattedPrice} / kg
@@ -52,46 +76,3 @@ const displayData = (data) => {
         productsData.innerHTML += html;
     });
 };
-
-// Call fetchData and handle the result
-fetchDataProducts();
-
-
-const fetchDataCategories = async () => {
-    try {
-        const response = await axios.get(API_URL + "categories");
-        const data = response.data;
-        console.log(data);
-        // displayData(data);
-    } catch (error) {
-        console.error("Error fetching data:", error);
-    }
-}; //* Lấy API phần danh mục
-
-fetchDataCategories();
-
-const fetchDataOrders = async () => {
-    try {
-        const response = await axios.get(API_URL + "orders");
-        const data = response.data;
-        console.log(data);
-        // displayData(data);
-    } catch (error) {
-        console.error("Error fetching data:", error);
-    }
-}; //* Lấy API phần đơn hàng
-
-fetchDataOrders();
-
-const fetchDataOrdersDetails = async () => {
-    try {
-        const response = await axios.get(API_URL + "order_details");
-        const data = response.data;
-        console.log(data);
-        // displayData(data);
-    } catch (error) {
-        console.error("Error fetching data:", error);
-    }
-}; //* Lấy API phần chi tiết đơn hàng
-
-fetchDataOrdersDetails();

@@ -12536,3 +12536,16 @@ fieldset:disabled .btn {
         display: none !important
     }
 }
+
+.w-1{
+    width: 1rem;
+}
+.w-2{
+    width: 2rem;
+}
+.w-3{
+    width: 3rem;
+}
+.w-4{
+    width: 4rem;
+}

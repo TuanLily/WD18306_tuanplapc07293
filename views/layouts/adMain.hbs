@@ -58,18 +58,59 @@
             <!-- Navbar End -->
 
             <!-- Body Start -->
-
+            {{!--! Body main start --}}
             {{#if isHomePage}}
             {{{body}}}
+            {{!--! Body main end --}}
+
+            {{!--* Body products main start --}}
             {{else}}
-            {{#if isListPage}}
+            {{#if isProductListPage}}
             {{> products/product-list}}
             {{else}}
+            {{#if isProductCreatePage}}
+            {{> products/product-create}}
+            {{else}}
+            {{#if isProductEditPage}}
+            {{> products/product-edit}}
+            {{!--* Body products main end --}}
+
+            {{!-- Body Categories main start--}}
+            {{else}}
+            {{#if isCateListPage}}
+            {{> categories/cate-list}}
+            {{else}}
+            {{#if isCateCreatePage}}
+            {{> categories/cate-create}}
+            {{else}}
+            {{#if isCateEditPage}}
+            {{> categories/cate-edit}}
+            {{!-- Body Categories main end--}}
+
+            {{!-- !Body Orders main start--}}
+            {{else}}
+            {{#if isOrderListPage}}
+            {{> orders/order-list}}
+            {{else}}
+            {{#if isOrderDetailPage}}
+            {{> orders/order-detail}}
+            {{!-- !Body Orders main end--}}
+
+
+            {{else}}
             {{#if is404Page}}
-            {{> admin404}}
+            {{> error/admin404}}
             {{/if}}
             {{/if}}
             {{/if}}
+            {{/if}}
+            {{/if}}
+            {{/if}}
+            {{/if}}
+            {{/if}}
+            {{/if}}
+            {{/if}}
+
 
             <!-- Body End -->
 
