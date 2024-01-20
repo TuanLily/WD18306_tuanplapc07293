@@ -165,33 +165,35 @@
 
 })(jQuery);
 
-// Thêm biến global để lưu trữ số lượng sản phẩm trong giỏ hàng
-if (typeof cartItemCount === 'undefined') {
-    // Khai báo biến cartItemCount nếu nó chưa được khai báo trước đó
-    var cartItemCount = 3; // Số lượng sản phẩm giả định, bạn có thể thay đổi theo nhu cầu thực tế
-}
-// Hàm để hiển thị pop-up và cập nhật số lượng sản phẩm trong giỏ hàng
-function openCartPopup() {
-    // Hiển thị pop-up với hiệu ứng fade-in
-    const cartPopup = document.getElementById('cartPopup');
-    cartPopup.style.display = 'flex';
-    cartPopup.classList.remove('fade-out'); // Đảm bảo lớp fade-out đã được loại bỏ
 
-    // Hiển thị số lượng sản phẩm trong giỏ hàng trong pop-up
-    document.getElementById('cartItemCountPopup').innerText = cartItemCount;
+// JavaScript để xử lý sự kiện khi nhấn nút "minus"
+function decrementQuantity() {
+    const quantityInput = document.getElementById('quantityInput');
+    let currentValue = parseInt(quantityInput.value, 10);
 
+    if (!isNaN(currentValue) && currentValue > 1) {
+        quantityInput.value = currentValue - 1;
+    }
 }
 
-// Hàm để ẩn pop-up và xóa sự kiện click trên overlay
-function closeCartPopup() {
-    // Ẩn pop-up với hiệu ứng fade-out
-    const cartPopup = document.getElementById('cartPopup');
-    cartPopup.classList.add('fade-out');
+function validateQuantityInput(input) {
+    // Lấy giá trị hiện tại của ô input
+    let currentValue = input.value;
 
-    // Đặt thời gian chờ để ẩn pop-up sau khi hoàn thành hiệu ứng fade-out
-    setTimeout(() => {
-        cartPopup.style.display = 'none';
-        cartPopup.classList.remove('fade-out');
-    }, 300); // 300ms là thời gian của hiệu ứng fade-out
+    // Sử dụng regex để kiểm tra xem giá trị có phải là số nguyên dương không
+    if (!/^[1-9]\d*$/.test(currentValue)) {
+        // Nếu không hợp lệ, đặt giá trị về 1
+        input.value = 1;
+    }
 }
 
+
+// JavaScript để xử lý sự kiện khi nhấn nút "plus"
+function incrementQuantity() {
+    const quantityInput = document.getElementById('quantityInput');
+    let currentValue = parseInt(quantityInput.value, 10);
+
+    if (!isNaN(currentValue)) {
+        quantityInput.value = currentValue + 1;
+    }
+}
