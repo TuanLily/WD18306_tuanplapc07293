@@ -1,4 +1,5 @@
 "use strict";
+
 const express = require('express');
 const handlebars = require('express-handlebars'); // Sửa đổi dòng này
 
@@ -40,8 +41,7 @@ app.use((req, res, next) => {
 
 //! Bắt đầu cáu hình cho trang Admin
 appAdmin.use(express.static(__dirname + '/src/Admin'));
-// appAdmin.use(express.static(__dirname + '/admin'));
-
+appAdmin.use(express.static(__dirname + '/src/public'));
 
 // Cấu hình sử dụng express-handlebars
 appAdmin.engine('hbs', handlebars.engine({
