@@ -1,6 +1,7 @@
 "use strict";
 
 const express = require('express');
+const path = require('path');
 const handlebars = require('express-handlebars'); // Sửa đổi dòng này
 
 const app = express();
@@ -12,7 +13,9 @@ const adminPort = 3200 || 5050;
 
 
 // Cấu hình Public static Folder
-app.use(express.static(__dirname + '/src'));
+// app.use(express.static(__dirname + '/src'));
+app.use(express.static(path.join(__dirname, '/src')));
+
 
 // Cấu hình sử dụng express-handlebars
 app.engine('hbs', handlebars.engine({ // Sửa đổi dòng này
@@ -40,8 +43,9 @@ app.use((req, res, next) => {
 
 
 //! Bắt đầu cáu hình cho trang Admin
-appAdmin.use(express.static(__dirname + '/src/Admin'));
-appAdmin.use(express.static(__dirname + '/src/public'));
+appAdmin.use(express.static(path.join(__dirname, '/src/Admin')));
+appAdmin.use(express.static(path.join(__dirname, '/src/public')));
+
 
 // Cấu hình sử dụng express-handlebars
 appAdmin.engine('hbs', handlebars.engine({

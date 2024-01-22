@@ -4,15 +4,14 @@
         <div class="col-sm-12 col-xl-12">
             <div class="bg-light rounded h-100 p-4">
                 <h6 class="mb-4">Thêm danh mục</h6>
-                <form>
+                <form class="form-category">
                     <div class="mb-3">
-                        <label for="inputProduct" class="form-label">Tên danh mục</label>
-                        <input type="text" class="form-control" id="inputProduct" aria-describedby="nameProduct">
-                        <div class="my-2">
-                            <span class="">Chỗ nữa báo lỗi Validate</span>
-                        </div>
+                        <label for="title" class="form-label">Tên danh mục</label>
+                        <input type="text" id="title" class="form-control" aria-describedby="title">
+                        <div id="categoryError" class="my-2"></div>
                     </div>
-                    <a href="" class="btn btn-primary m-2">Thêm mới</a>
+                    <button type="submit" id="myBtn" class="btn btn-primary m-2">Thêm mới</button>
+
                     <input type="reset" class="btn btn-warning m-2" value="Nhập lại">
                 </form>
             </div>

@@ -1,8 +1,8 @@
 {
   "categories": [
     {
-      "id": 1,
-      "title": "trái cây"
+      "title": "Trái cây tươi 1",
+      "id": 1
     },
     {
       "id": 2,
@@ -15,10 +15,6 @@
     {
       "id": 4,
       "title": "đồ uống"
-    },
-    {
-      "id": 5,
-      "title": "đồ hải sản"
     },
     {
       "id": 6,
@@ -65,10 +61,6 @@
       "title": "thực phẩm dinh dưỡng"
     },
     {
-      "id": 17,
-      "title": "đồ chay"
-    },
-    {
       "id": 18,
       "title": "thực phẩm chức năng"
     },
@@ -79,6 +71,10 @@
     {
       "id": 20,
       "title": "đồ uống có cồn"
+    },
+    {
+      "title": "đồ chay",
+      "id": 21
     }
   ],
   "products": [
