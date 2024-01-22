@@ -1,11 +1,68 @@
 
 import { API_URL } from './api.js';
 import fetchData from './api.js'; // Đảm bảo tên là fetchData
+import { decrementQuantity, validateQuantityInput, incrementQuantity } from './main.js';
 
 
+
+Promise.all([fetchData("products"), fetchData("categories")])
+    .then(
+        ([products, categories]) => {
+            displayShopData(products, categories);
+        }
+    );
+
+const displayShopData = (products, categories) => {
+    const productsData = document.querySelector(".products-data");
+
+    products.forEach((product) => {
+        const imageUrl = product.image ? `/img/${product.image}` : "";
+        const viPrice = new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+        });
+
+        const price = product.price;
+        const formattedPrice = viPrice.format(price);
+
+        // Tìm thông tin danh mục tương ứng bằng vòng lặp
+        const category = categories.find((cat) => cat.id === product.cate_id);
+        console.log(category);
+        const categoryName = category ? category.title : "Unknown Category";
+
+        const html = `
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div class="rounded position-relative fruite-item">
+                            <div class="fruite-img" data-product-id="${product.id}">
+                                <a href="/shop-detail?id=${product.id}" class="product-link">
+                                    <img src="${imageUrl}" class="img-fluid w-100 rounded-top" alt="IMG">
+                                </a>
+                            </div>
+                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px">
+                                ${categoryName}
+                            </div>
+                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                <h4>${product.name}</h4>
+                                <div class="d-flex justify-content-between flex-lg-wrap">
+                                    <p class="text-dark fs-5 fw-bold mb-0">
+                                        ${formattedPrice} / kg
+                                    </p>
+                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                        <i class="fa fa-shopping-bag me-2 text-primary"></i>
+                                        Add to cart
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+        productsData ? (productsData.innerHTML += html) : "";
+    });
+}; //* Show sản phẩm cho trang shop
 //*! Chỗ lấy API show sản phẩm và danh mục cho trang chủ
 const displayData = (products, container, categories) => {
     container.innerHTML = "";
+
 
     products.forEach((product) => {
         const imageUrl = product.image ? `/img/${product.image}` : "";
@@ -46,10 +103,11 @@ const displayData = (products, container, categories) => {
                     </div>
                 </div>
             `;
-
         container.innerHTML += html;
     });
 };
+
+
 
 //*! Chỗ lấy API show sản phẩm và danh mục cho load sản phẩm theo danh mục
 
@@ -300,13 +358,13 @@ function displayProductDetail(product, categories) {
                         <p class="mb-4">${product.detail}</p>
                         <div class="input-group quantity mb-5" style="width: 100px;">
                             <div class="input-group-btn">
-                                <button class="btn btn-sm btn-minus rounded-circle bg-light border" onclick="decrementQuantity()">
+                                <button id="decrementButton" class="btn btn-sm btn-minus rounded-circle bg-light border">
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
                             <input type="text" id="quantityInput" class="form-control form-control-sm text-center border-0" value="1">
                             <div class="input-group-btn">
-                                <button class="btn btn-sm btn-plus rounded-circle bg-light border" onclick="incrementQuantity()">
+                                <button id="incrementButton" class="btn btn-sm btn-plus rounded-circle bg-light border">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
@@ -596,6 +654,15 @@ function displayProductDetail(product, categories) {
                 </div>
             </div>
     `;
+    const decrementButton = document.getElementById('decrementButton');
+    const incrementButton = document.getElementById('incrementButton');
+    const quantityInput = document.getElementById('quantityInput');
+
+    decrementButton.addEventListener('click', decrementQuantity);
+    incrementButton.addEventListener('click', incrementQuantity);
+    quantityInput.addEventListener('input', function () {
+        validateQuantityInput(this);
+    });
 }
 
 function handleError(error) {

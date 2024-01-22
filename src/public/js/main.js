@@ -167,7 +167,9 @@
 
 
 // JavaScript để xử lý sự kiện khi nhấn nút "minus"
-function decrementQuantity() {
+// quantityModule.js
+
+export function decrementQuantity() {
     const quantityInput = document.getElementById('quantityInput');
     let currentValue = parseInt(quantityInput.value, 10);
 
@@ -176,7 +178,7 @@ function decrementQuantity() {
     }
 }
 
-function validateQuantityInput(input) {
+export function validateQuantityInput(input) {
     // Lấy giá trị hiện tại của ô input
     let currentValue = input.value;
 
@@ -187,9 +189,7 @@ function validateQuantityInput(input) {
     }
 }
 
-
-// JavaScript để xử lý sự kiện khi nhấn nút "plus"
-function incrementQuantity() {
+export function incrementQuantity() {
     const quantityInput = document.getElementById('quantityInput');
     let currentValue = parseInt(quantityInput.value, 10);
 
@@ -197,3 +197,4 @@ function incrementQuantity() {
         quantityInput.value = currentValue + 1;
     }
 }
+
