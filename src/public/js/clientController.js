@@ -94,9 +94,9 @@ const displayData = (products, container, categories) => {
                                 <p class="text-dark fs-5 fw-bold mb-0">
                                     ${formattedPrice} / kg
                                 </p>
-                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                <a href="#" class="btn border border-secondary rounded-pill px-3 mt-1 text-primary">
                                     <i class="fa fa-shopping-bag me-2 text-primary"></i>
-                                    Add to cart
+                                    Thêm giỏ hàng
                                 </a>
                             </div>
                         </div>

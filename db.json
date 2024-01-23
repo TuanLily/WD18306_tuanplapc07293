@@ -75,6 +75,10 @@
     {
       "title": "đồ chay",
       "id": 21
+    },
+    {
+      "title": "Đồ đóng hộp 1",
+      "id": 22
     }
   ],
   "products": [
@@ -87,12 +91,12 @@
       "image": "best-product-1.jpg"
     },
     {
-      "id": 2,
-      "name": "Dâu",
-      "cate_id": 1,
+      "name": "Dâu Tầm",
+      "image": "best-product-2.jpg",
       "price": "25000",
+      "cate_id": 2,
       "detail": "fresh and crunchy",
-      "image": "best-product-2.jpg"
+      "id": 2
     },
     {
       "id": 3,
@@ -463,28 +467,36 @@
       "image": "pngegg (3).png"
     },
     {
-      "id": 49,
       "name": "Rau củ hữu cơ tươi sống",
-      "cate_id": 9,
+      "image": "pngegg (3).png",
       "price": "45000",
+      "cate_id": 9,
       "detail": "fresh organic vegetables",
-      "image": "pngegg (3).png"
+      "id": 49
     },
     {
-      "id": 50,
-      "name": "Hạt hạnh nhân và hạt dẻ cười hỗn hợp",
-      "cate_id": 10,
-      "price": "70000",
+      "name": "Rổ táo",
+      "image": "baner-1.png",
+      "price": "80000",
+      "cate_id": 1,
       "detail": "fresh organic vegetables",
-      "image": "pngegg (3).png"
+      "id": 50
     },
     {
-      "name": "fgffdg",
-      "image": "pngegg (6).png",
-      "price": "4234",
+      "name": "Ảnh gái",
+      "image": "pngegg (5).png",
+      "price": "34220",
       "cate_id": 3,
-      "detail": "<p>5435</p>",
-      "id": 51
+      "detail": "<p>cxvcxxcgdfg</p>",
+      "id": 52
+    },
+    {
+      "name": "Dâu tằm",
+      "image": "fruite-item-2.jpg",
+      "price": "4324",
+      "cate_id": 2,
+      "detail": "<p>4324</p>",
+      "id": 53
     }
   ],
   "orders": [
