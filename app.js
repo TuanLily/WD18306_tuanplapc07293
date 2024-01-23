@@ -45,6 +45,7 @@ app.use((req, res, next) => {
 //! Bắt đầu cáu hình cho trang Admin
 appAdmin.use(express.static(path.join(__dirname, '/src/Admin')));
 appAdmin.use(express.static(path.join(__dirname, '/src/public')));
+appAdmin.use(express.static(path.join(__dirname, '/src')));
 
 
 // Cấu hình sử dụng express-handlebars

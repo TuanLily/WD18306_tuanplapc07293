@@ -1,18 +1,23 @@
 
 import fetchData from '/js/api.js';
 import { API_URL } from '/js/api.js';
+import { showAlertAndRedirect } from './extension.js';
 // import { addCategory } from './Categories/create.js';
-
-const handleCategoryForm = document.querySelector(".form-category");
-const handleCategoryEditForm = document.querySelector(".formEdit-Category");
 
 document.addEventListener("DOMContentLoaded", async function () {
     // Fetch danh sách danh mục từ API
     const categories = await fetchData("categories");
+    const products = await fetchData("products");
 
     // Hiển thị danh sách danh mục trong bảng
     displayCategories(categories);
+    renderDisplayCategories(products, categories);
 });
+
+// ! Sử lý CRUD danh mục
+const handleCategoryForm = document.querySelector(".form-category");
+const handleCategoryEditForm = document.querySelector(".formEdit-Category");
+const handleProductForm = document.querySelector(".form-product");
 
 // Hàm để hiển thị danh sách danh mục
 const displayCategories = async (categories) => {
@@ -39,7 +44,7 @@ const displayCategories = async (categories) => {
         `;
         categoriesTableBody ? categoriesTableBody.innerHTML += html : " ";
     });
-
+    // Hàm để hiển thị danh sách danh mục
 
 
     // Xử lý sự kiện click nút sửa
@@ -67,17 +72,17 @@ const displayCategories = async (categories) => {
             const categoryId = this.getAttribute('data-id');
             const categoryTitle = this.getAttribute('data-title');
             const confirmMessage = `Bạn có chắc muốn xóa danh mục với tên "${categoryTitle}" không?`;
-    
+
             // Hiển thị hộp thoại xác nhận
             if (confirm(confirmMessage)) {
                 // Thực hiện xóa nếu người dùng xác nhận
                 const trElement = this.closest('tr');
-    
+
                 if (categoryId && trElement) {
                     try {
                         // Tạm thời vô hiệu hóa nút xóa
                         this.disabled = true;
-    
+
                         await axios.delete(`${API_URL}categories/${categoryId}`);
                         // Sau khi xóa thành công, có thể cập nhật giao diện hoặc làm các thao tác khác cần thiết
                         console.log(`Deleted category with ID: ${categoryId}`);
@@ -96,10 +101,6 @@ const displayCategories = async (categories) => {
             }
         });
     });
-    
-
-
-
 
     // Create Category
     handleCategoryForm ? handleCategoryForm.addEventListener('submit', async (e) => {
@@ -123,6 +124,7 @@ const displayCategories = async (categories) => {
             });
             // Sau khi thêm thành công, có thể cập nhật giao diện hoặc làm các thao tác khác cần thiết
             console.log('Added new category');
+            showAlertAndRedirect("Thêm danh mục mới thành công", "/cate-list")
 
             await setTimeout(() => {
                 window.location.href = `/cate-list`;
@@ -133,9 +135,6 @@ const displayCategories = async (categories) => {
 
     }) : "";
 };
-
-
-
 
 document.addEventListener("DOMContentLoaded", async function () {
     // Lấy id từ tham số truyền vào URL
@@ -176,7 +175,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             return;
         } else {
             msgError.innerHTML = '';
-            categoryError.innerHTML = '<span class="text-success">Thêm danh mục thành công</span>'; // Nếu bạn muốn hiển thị thông báo thành công
 
             try {
                 // Sử dụng phương thức PUT để cập nhật danh mục
@@ -186,10 +184,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
                 // Sau khi cập nhật thành công, có thể chuyển hướng hoặc thực hiện các thao tác khác cần thiết
                 console.log('Updated category');
-
-                await setTimeout(() => {
-                    window.location.href = `/cate-list`;
-                }, 1500)
+                showAlertAndRedirect(`Cập nhật danh mục "${title}" thành công`, "/cate-list")
             } catch (error) {
                 console.log(error.message);
             }
@@ -201,4 +196,223 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 
+// ! Sử lý CRUD sản phẩm
+
+const renderDisplayCategories = async (products, categories) => {
+    const productsTableBody = document.getElementById("productsTableBody");
+
+    // Xóa nội dung cũ của tbody
+    productsTableBody ? productsTableBody.innerHTML = "" : " ";
+
+    // Thêm từng danh mục vào tbody
+    await products.forEach((product, index) => {
+        const imageUrl = product.image ? `/img/${product.image}` : "";
+        const viPrice = new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+        });
+
+        const category = categories.find((cat) => cat.id === product.cate_id);
+        const categoryName = category ? category.title : "Unknown Category";
+
+        const price = product.price;
+        const formattedPrice = viPrice.format(price);
+        const html = `
+         <tr data-id='${product.id}'>
+            <th scope="row">${index + 1}</th>
+            <td>${product.name}</td>
+            <td align="center"><img src="${imageUrl}" alt="IMG" width="80"></td>
+            <td>${formattedPrice}</td>
+            <td>${categoryName}</td>
+            <td class="w-3">
+                <a href="/product-edit" class="btn-pro-edit"d ata-id='${product.id}'><i class="fa-solid fa-pen-to-square"></i></a>
+            </td>
+            <td class="w-3"> <a class="btn-pro-del" data-id='${product.id}' data-title='${product.name}'><i class="fa-solid fa-trash"></i></a>
+            </td>
+        </tr>
+        `;
+        productsTableBody ? productsTableBody.innerHTML += html : " ";
+    });
+
+
+
+
+
+    // * Xử lý sự kiện click nút xóa
+    const deleteButtons = document.querySelectorAll('.btn-pro-del');
+    deleteButtons.forEach((btn) => {
+        btn.addEventListener('click', async function (e) {
+            e.preventDefault();
+            const productID = this.getAttribute('data-id');
+            const productName = this.getAttribute('data-title');
+            const confirmMessage = `Bạn có chắc muốn xóa danh mục với tên "${productName}" không?`;
+
+            // Hiển thị hộp thoại xác nhận
+            if (confirm(confirmMessage)) {
+                // Thực hiện xóa nếu người dùng xác nhận
+                const trElement = this.closest('tr');
+
+                if (productID && trElement) {
+                    try {
+                        // Tạm thời vô hiệu hóa nút xóa
+                        this.disabled = true;
+
+                        await axios.delete(`${API_URL}products/${productID}`);
+                        // Sau khi xóa thành công, có thể cập nhật giao diện hoặc làm các thao tác khác cần thiết
+                        console.log(`Deleted product with ID: ${productID}`);
+                        // Xóa thẻ <tr> khỏi DOM
+                        trElement.remove();
+                    } catch (error) {
+                        console.log(error.message);
+                    } finally {
+                        // Kích hoạt lại nút xóa sau khi hoàn thành yêu cầu
+                        this.disabled = false;
+                    }
+                }
+            } else {
+                // Người dùng đã hủy xác nhận
+                console.log('Delete cancelled');
+            }
+        });
+    });
+
+    //* Sử lý chức năng create product
+
+    // Function để hiển thị hình ảnh khi chọn file
+    const showImage = () => {
+        const inputImage = document.getElementById('formFileMultiple');
+        inputImage ? inputImage.addEventListener('change', () => {
+            // Kiểm tra xem đã chọn file hay chưa
+            if (inputImage.files.length > 0) {
+                const image = inputImage.files.item(0).name;
+                console.log(image);
+                document.getElementById('showImage').innerHTML = `<img src="/img/${image}" alt="" width="120">`;
+            }
+        }) : "";
+    };
+
+    const loadCategories = async () => {
+        try {
+            const response = await axios.get(`${API_URL}categories`);
+            const categories = response.data;
+            // Gọi hàm để cập nhật dữ liệu cho select element
+            updateCategoriesDropdown(categories);
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
+
+    const selectElement = document.getElementById('checkCategory');
+    let selectedValue = null;
+
+    const updateCategoriesDropdown = (categories) => {
+        // Xóa bỏ tất cả các sự kiện 'change' trước đó
+        selectElement.removeEventListener('change', handleDropdownChange);
+
+        // Xóa tất cả các option hiện tại trong dropdown
+        selectElement.innerHTML = '';
+
+        // Thêm các option mới từ dữ liệu categories
+        categories.forEach((category) => {
+            const option = document.createElement('option');
+            option.value = category.id;
+            option.text = category.title;
+            selectElement.appendChild(option);
+        });
+
+        // Thêm sự kiện để theo dõi sự thay đổi trong dropdown
+        selectElement.addEventListener('change', handleDropdownChange);
+    };
+
+    const handleDropdownChange = () => {
+        // Lấy giá trị option đã chọn
+        selectedValue = selectElement.value;
+    };
+
+
+
+    handleProductForm ? handleProductForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await loadCategories();
+
+        const name = document.getElementById('inputProduct').value.trim();
+        const price = document.getElementById('inputPrice').value.trim();
+        const detail = document.getElementById('summernote').value;
+        const fileInput = document.getElementById('formFileMultiple');
+        const selectedFile = fileInput.files[0];
+
+        const productErr = document.querySelector('.productError');
+        const imgtErr = document.querySelector('.imgError');
+        const priceErr = document.querySelector('.priceError');
+        const catetErr = document.querySelector('.cateError');
+
+
+        productErr.innerHTML = '';
+        imgtErr.innerHTML = '';
+        priceErr.innerHTML = '';
+        catetErr.innerHTML = '';
+
+        // Kiểm tra xem các trường có đúng giá trị không và hiển thị lỗi nếu cần
+        let hasError = false;
+
+        if (!name || !/^[a-zA-Z0-9\s]+$/.test(name)) {
+            productErr.innerHTML = '<span class="text-danger">Tên sản phẩm không hợp lệ</span>';
+            hasError = true;
+        }
+
+        // Kiểm tra xem giá có phải là số dương hay không
+        if (!price || isNaN(price) || parseFloat(price) <= 0) {
+            priceErr.innerHTML = '<span class="text-danger">Giá không hợp lệ</span>';
+            hasError = true;
+        }
+
+
+        // Kiểm tra xem giá trị đã chọn trong dropdown có phải là rỗng hay không
+        if (!selectedValue) {
+            catetErr.innerHTML = '<span class="text-danger">Danh mục không được để trống</span>';
+            hasError = true;
+        }
+
+        // Kiểm tra xem tệp tin có được chọn hay không
+        if (!selectedFile) {
+            imgtErr.innerHTML = '<span class="text-danger">Hình ảnh không được để trống</span>';
+            hasError = true;
+        } else {
+            // Kiểm tra loại tệp tin, ví dụ chỉ cho phép ảnh
+            const allowedExtensions = /\.(jpg|jpeg|png|gif)$/i;
+            if (!allowedExtensions.test(selectedFile.name)) {
+                imgtErr.innerHTML = '<span class="text-danger">Chỉ chấp nhận định dạng ảnh (jpg, jpeg, png, gif)</span>';
+                hasError = true;
+            }
+        }
+
+        const inputImage = selectedFile.name;
+
+        // Thực hiện các thao tác cần thiết khi thông tin hợp lệ
+        if (!hasError) {
+            try {
+                // Tiếp tục xử lý, ví dụ: gửi yêu cầu đến server để thêm sản phẩm
+                await axios.post(`${API_URL}products`, {
+                    name: name,
+                    image: inputImage,
+                    price: price,
+                    cate_id: parseInt(selectedValue),
+                    detail: detail,
+                });
+
+                // Sau khi thêm sản phẩm thành công, có thể chuyển hướng hoặc làm các thao tác khác cần thiết
+                console.log('Added new product');
+                showAlertAndRedirect("Thêm sản phẩm thành công", "/product-list")
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
+    }) : "";
+    // Gọi hàm showImage để kích hoạt sự kiện change
+    showImage();
+
+
+
+
+}
 

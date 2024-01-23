@@ -5,12 +5,12 @@
       "id": 1
     },
     {
-      "id": 2,
-      "title": "rau củ"
+      "title": "Rau củ",
+      "id": 2
     },
     {
-      "id": 3,
-      "title": "thực phẩm đóng gói"
+      "title": "Thực phẩm đóng gói",
+      "id": 3
     },
     {
       "id": 4,
@@ -477,6 +477,14 @@
       "price": "70000",
       "detail": "fresh organic vegetables",
       "image": "pngegg (3).png"
+    },
+    {
+      "name": "fgffdg",
+      "image": "pngegg (6).png",
+      "price": "4234",
+      "cate_id": 3,
+      "detail": "<p>5435</p>",
+      "id": 51
     }
   ],
   "orders": [

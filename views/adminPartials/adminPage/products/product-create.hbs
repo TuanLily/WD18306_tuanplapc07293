@@ -3,46 +3,44 @@
     <div class="row g-4">
         <div class="col-sm-12 col-xl-12">
             <div class="bg-light rounded h-100 p-4">
-                <h6 class="mb-4">Thêm sản phảm</h6>
-                <form>
+                <h6 class="mb-4">Thêm sản phẩm</h6>
+                <form class="form-product">
                     <div class="mb-3">
                         <label for="inputProduct" class="form-label">Tên sản phẩm</label>
                         <input type="text" class="form-control" id="inputProduct" aria-describedby="nameProduct">
-                        <div class="my-2">
-                            <span class="">Chỗ nữa báo lỗi Validate</span>
-                        </div>
+                        <div class="productError my-2"></div>
                     </div>
                     <div class="mb-3">
                         <label for="formFileMultiple" class="form-label">Hình sản phẩm</label>
                         <input class="form-control" type="file" id="formFileMultiple" multiple>
-                        <div class="my-2">
-                            <span class="">Chỗ nữa báo lỗi Validate</span>
-                        </div>
+                        <p id="showImage" class="my-2 mt-3"></p>
+                        <div class="imgError my-2"></div>
+
                     </div>
                     <div class="mb-3">
                         <label for="inputPrice" class="form-label">Giá sản phẩm</label>
                         <input type="number" class="form-control" id="inputPrice" aria-describedby="price">
-                        <div class="my-2">
-                            <span class="">Chỗ nữa báo lỗi Validate</span>
-                        </div>
+                        <div class="priceError my-2"></div>
+
                     </div>
                     <div class="mb-3">
                         <label for="inputDetail" class="form-label">Mô tả</label>
-                        <textarea id="summernote" placeholder="Nhập nội dung ở đây" name="mo_ta"></textarea>
-                        <div class="my-2">
-                            <span class="">Chỗ nữa báo lỗi Validate</span>
-                        </div>
+                        <textarea id="summernote" placeholder="Nhập nội dung ở đây"></textarea>
+                        <div class="detailError my-2"></div>
+
                     </div>
-                    <div class="mb-3 col-3">
+                    <div class="mb-3 col-6">
                         <label for="checkCategory" class="form-label">Chọn danh mục</label>
-                        <select class="form-select form-in" id="checkCategory" aria-label="Default select example">
-                            <option selected>Vui lòng chọn danh mục</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select class="form-select form-in" id="checkCategory">
+                            {{!-- <option selected>Vui lòng chọn danh mục</option>
+                            <option value="One">One</option>
+                            <option value="Two">Two</option>
+                            <option value="Three">Three</option> --}}
                         </select>
                     </div>
-                    <a href="" class="btn btn-primary m-2">Thêm mới</a>
+                    <div class="cateError my-2"></div>
+
+                    <button type="submit" id="myBtn" class="btn btn-primary m-2">Thêm mới</button>
                     <input type="reset" class="btn btn-warning m-2" value="Nhập lại">
                 </form>
             </div>
