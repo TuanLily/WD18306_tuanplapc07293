@@ -27,7 +27,6 @@ const displayShopData = (products, categories) => {
 
         // Tìm thông tin danh mục tương ứng bằng vòng lặp
         const category = categories.find((cat) => cat.id === product.cate_id);
-        console.log(category);
         const categoryName = category ? category.title : "Unknown Category";
 
         const html = `
@@ -47,10 +46,10 @@ const displayShopData = (products, categories) => {
                                     <p class="text-dark fs-5 fw-bold mb-0">
                                         ${formattedPrice} / kg
                                     </p>
-                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
-                                        <i class="fa fa-shopping-bag me-2 text-primary"></i>
-                                        Add to cart
-                                    </a>
+                                    <button class="btnAddToCart btn border border-secondary rounded-pill px-3 text-primary" data-product-id="${product.id}">
+                                        <i class="fa fa-shopping-bag me-2 text-primary"></i>Add to cart
+                                    </button>
+
                                 </div>
                             </div>
                         </div>
@@ -62,7 +61,6 @@ const displayShopData = (products, categories) => {
 //*! Chỗ lấy API show sản phẩm và danh mục cho trang chủ
 const displayData = (products, container, categories) => {
     container.innerHTML = "";
-
 
     products.forEach((product) => {
         const imageUrl = product.image ? `/img/${product.image}` : "";
@@ -78,38 +76,58 @@ const displayData = (products, container, categories) => {
         const categoryName = category ? category.title : "Unknown Category";
 
         const html = `
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div class="rounded position-relative fruite-item">
-                        <div class="fruite-img" data-product-id="${product.id}">
-                            <a href="/shop-detail?id=${product.id}" class="product-link">
-                                <img src="${imageUrl}" class="img-fluid w-100 rounded-top" alt="IMG">
-                            </a>
-                        </div>
-                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px">
-                            ${categoryName}
-                        </div>
-                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                            <h4>${product.name}</h4>
-                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                <p class="text-dark fs-5 fw-bold mb-0">
-                                    ${formattedPrice} / kg
-                                </p>
-                                <a href="#" class="btn border border-secondary rounded-pill px-3 mt-1 text-primary">
-                                    <i class="fa fa-shopping-bag me-2 text-primary"></i>
-                                    Thêm giỏ hàng
-                                </a>
-                            </div>
+            <div class="col-md-6 col-lg-4 col-xl-3">
+                <div class="rounded position-relative fruite-item">
+                    <div class="fruite-img" data-product-id="${product.id}">
+                        <a href="/shop-detail?id=${product.id}" class="product-link">
+                            <img src="${imageUrl}" class="img-fluid w-100 rounded-top" alt="IMG">
+                        </a>
+                    </div>
+                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px">
+                        ${categoryName}
+                    </div>
+                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                        <h4>${product.name}</h4>
+                        <div class="d-flex justify-content-between flex-lg-wrap">
+                            <p class="text-dark fs-5 fw-bold mb-0">
+                                ${formattedPrice} / kg
+                            </p>
+                            <button class="btnAddToCart btn border border-secondary rounded-pill px-3 text-primary" data-product-id="${product.id}">
+                                 <i class="fa fa-shopping-bag me-2 text-primary"></i>Thêm giỏ hàng
+                             </button>
                         </div>
                     </div>
                 </div>
-            `;
+            </div>
+        `;
         container.innerHTML += html;
+    });
+
+
+    //* Sử lý nút thêm giỏ hàng
+    // Sau khi HTML được thêm vào container, thêm sự kiện cho nút "Thêm giỏ hàng"
+    const addToCartButtons = container.querySelectorAll(".btnAddToCart");
+
+    addToCartButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            // Lấy data-product-id từ thuộc tính data của button để biết id của sản phẩm
+            const productId = parseInt(button.getAttribute("data-product-id"), 10);
+
+            if (!isNaN(productId)) {
+                // Nếu productId là một số hợp lệ, thì mới gọi addToCart
+                addToCart(productId);
+            }
+
+        });
     });
 };
 
 
 
+
+
 //*! Chỗ lấy API show sản phẩm và danh mục cho load sản phẩm theo danh mục
+
 
 document.addEventListener("DOMContentLoaded", async () => {
     try {
@@ -236,14 +254,25 @@ document.addEventListener("DOMContentLoaded", async () => {
                     displayData(productsByCategory, productsDataContainer, categories);
                 });
             });
+
+            // Nếu trang được tải lại, tự động kích hoạt tab-0 và hiển thị dữ liệu tương ứng
+            if (sessionStorage.getItem('isPageReloaded')) {
+                allProductsTabLink.click();
+                sessionStorage.removeItem('isPageReloaded');
+            }
+
         } else {
-            console.error('Không tìm thấy phần tử với id là categoryTabs hoặc tabContent');
+            console.error('Cannot find elements with IDs categoryTabs or tabContent');
         }
     } catch (error) {
-        console.error('Lỗi khi lấy dữ liệu danh mục hoặc sản phẩm:', error);
+        console.error('Error fetching category or product data:', error);
     }
 });
 
+// Lưu flag isPageReloaded vào sessionStorage khi trang được tải lại
+window.onload = function () {
+    sessionStorage.setItem('isPageReloaded', 'true');
+};
 
 
 //*! Chỗ lấy API show trang chi tiết sản phẩm
@@ -672,3 +701,209 @@ function handleError(error) {
         ? (productDetailElement.innerHTML = "<p>Error fetching product detail</p>")
         : "";
 }
+
+
+
+
+//! Làm giỏ hàng
+// Hàm để lấy dữ liệu từ API
+const fetchProducts = async () => {
+    try {
+        const response = await fetchData("products");
+        const data = await response;
+        return data;
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        throw error;
+    }
+};
+
+
+
+// Sử dụng hàm fetchProducts để lấy dữ liệu
+const productsData = await fetchProducts();
+
+// Lưu trữ danh sách sản phẩm trong giỏ hàng trong localStorage
+const productInCart = localStorage.getItem("product") ? JSON.parse(localStorage.getItem("product")) : [];
+
+const saveToLocalStorage = () => {
+    localStorage.setItem("product", JSON.stringify(productInCart));
+}
+
+// Hàm thêm sản phẩm vào giỏ hàng
+const addToCart = (id) => {
+    let checkProduct = productInCart.some(value => value.id === id);
+    if (!checkProduct) {
+        // Tìm thông tin sản phẩm từ danh sách sản phẩm theo ID
+        let findProduct = productsData.find(product => product.id === id);
+        productInCart.unshift({
+            ...findProduct,
+            quantity: 1
+        });
+        saveToLocalStorage();
+        calculatorTotal();
+    } else {
+        const getIndex = productInCart.findIndex(value => value.id === id);
+        const product = productInCart.find(value => value.id === id);
+        productInCart[getIndex] = {
+            ...product,
+            quantity: ++product.quantity
+        };
+        saveToLocalStorage();
+        calculatorTotal();
+    }
+};
+
+// Sử lý tăng số lượng sản phẩm trên nút giỏ hàng
+let calculatorTotal = () => {
+    document.getElementById("total").innerHTML = productInCart.length;
+}
+
+let indexLoadPage = () => {
+    calculatorTotal();
+    displayData();
+}
+
+window.onload = () => {
+    indexLoadPage();
+};
+//Xử lý trang giỏ hàng
+
+
+
+const renderProductsCart = () => {
+    let data = '';
+
+    productInCart.forEach((value, index) => {
+        const viPrice = new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+        });
+
+        const price = value.price;
+        const formattedPrice = viPrice.format(price);
+
+        const total_money = value.quantity * value.price;
+        const formatTotalPrice = viPrice.format(total_money);
+
+        data += `
+            <tr>
+                <th scope="row">
+                    <div class="d-flex align-items-center">
+                        <img src="img/${value.image}" class="img-fluid me-5 rounded-circle"
+                            style="width: 80px; height: 80px;" alt="">
+                    </div>
+                </th>
+                <td>
+                    <p class="mb-0 mt-4">${value.name}</p>
+                </td>
+                <td>
+                    <p class="mb-0 mt-4">${formattedPrice}</p>
+                </td>
+                <td>
+                    <div class="input-group quantity mt-4" style="width: 100px;">
+                        <div class="input-group-btn">
+                            <button  id="minusBtn${index}_${value.quantity}" class="minusBtn btn btn-sm btn-minus rounded-circle bg-light border">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <input type="text" id="quantityInput2" class="form-control form-control-sm text-center border-0" value="${value.quantity}">
+                        <div class="input-group-btn">
+                            <button  id="plusBtn${index}" class="plusBtn btn btn-sm btn-plus rounded-circle bg-light border">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <p class="mb-0 mt-4"><strong>${formatTotalPrice}</strong></p>
+                </td>
+                <td>
+                    <button id="deleteProductInCart${index}" class="btn btn-md rounded-circle bg-light border mt-4">
+                        <i class="fa fa-times text-danger"></i>
+                    </button>
+                </td>
+            </tr>
+        `;
+    });
+
+    document.getElementById("products-cart").innerHTML = data;
+    // Sau khi đã thêm dữ liệu vào DOM, thêm sự kiện cho các nút
+    productInCart.forEach((value, index) => {
+        document.getElementById(`minusBtn${index}_${value.quantity}`).addEventListener('click', () => minusQuantity(index, value.quantity));
+        document.getElementById(`plusBtn${index}`).addEventListener('click', () => plusQuantity(index));
+        document.getElementById(`deleteProductInCart${index}`).addEventListener('click', () => deleteProductInCart(index));
+
+    });
+
+    // Bắt sự kiện sau khi tất cả sản phẩm đã được tạo
+};
+const minusQuantity = (index, quantity) => {
+    if (quantity > 1) {
+        productInCart[index] = {
+            ...productInCart[index],
+            quantity: --productInCart[index].quantity
+        };
+        saveToLocalStorage();
+        renderProductsCart();
+        totalMoney();
+    } else {
+        productInCart[index] = {
+            ...productInCart[index],
+            quantity: 1
+        };
+        saveToLocalStorage();
+        renderProductsCart();
+        totalMoney();
+    }
+
+}
+
+const plusQuantity = (index) => {
+    productInCart[index] = {
+        ...productInCart[index],
+        quantity: ++productInCart[index].quantity
+    };
+    saveToLocalStorage();
+    renderProductsCart();
+    totalMoney()
+}
+
+const deleteProductInCart = (index) => {
+    productInCart.splice(index, 1);
+    saveToLocalStorage();
+    renderProductsCart();
+    totalMoney();
+}
+
+
+const totalMoney = () => {
+    if (productInCart != []) {
+        let total = 0;
+        for (let i = 0; i < productInCart.length; i++) {
+            const total_money = productInCart[i].quantity * productInCart[i].price;
+            total += total_money;
+        }
+
+        // Định dạng và hiển thị tổng tiền
+        const viTotal = new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+        }).format(total);
+
+        const totalMoneyElements = document.querySelectorAll(".total-money");
+        totalMoneyElements.forEach(element => {
+            element.innerHTML = viTotal;
+        });
+    }
+
+}
+
+renderProductsCart();
+calculatorTotal();
+totalMoney();
+
+
+
+
+
