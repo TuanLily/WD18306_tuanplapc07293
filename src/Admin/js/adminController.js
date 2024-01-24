@@ -4,18 +4,33 @@ import { API_URL } from '/js/api.js';
 import { showAlertAndRedirect } from './extension.js';
 import { removeAscent } from './extension.js';
 import { loadCategories, selectedValue } from './Categories/categoriesModule.js';
+import { renderOrdersDisplay } from './Orders/ordersModule.js';
 
-// import { addCategory } from './Categories/create.js';
 
 document.addEventListener("DOMContentLoaded", async function () {
-    // Fetch danh sách danh mục từ API
-    const categories = await fetchData("categories");
-    const products = await fetchData("products");
+    try {
+        // Sử dụng Promise.all để gọi đồng thời các API và chờ cho tất cả chúng hoàn tất
+        const [categories, products, orders, orderDetails] = await Promise.all([
+            fetchData("categories"),
+            fetchData("products"),
+            fetchData("orders"),
+            fetchData("order_details")
+        ]);
 
-    // Hiển thị danh sách danh mục trong bảng
-    displayCategories(categories);
-    renderDisplayProducts(products, categories);
+        // Hiển thị danh sách danh mục trong bảng
+        displayCategories(categories);
+
+        // Thực hiện các hàm hiển thị sản phẩm và đơn hàng dựa trên dữ liệu đã nhận được
+        renderDisplayProducts(products, categories);
+        // renderOrders(orders, orderDetails);
+
+        renderOrdersDisplay(products, orders, orderDetails);
+
+    } catch (error) {
+        console.error('Error fetching data:', error.message);
+    }
 });
+
 
 // ! Sử lý CRUD danh mục
 const handleCategoryForm = document.querySelector(".form-category");
@@ -603,5 +618,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     }) : "";
 
 });
+
+
+//! Quản lý đon hàng nè
+
 
 
