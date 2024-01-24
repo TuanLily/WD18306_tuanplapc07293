@@ -5,6 +5,7 @@ import { showAlertAndRedirect } from './extension.js';
 import { removeAscent } from './extension.js';
 import { loadCategories, selectedValue } from './Categories/categoriesModule.js';
 import { renderOrdersDisplay } from './Orders/ordersModule.js';
+import { renderUserDisplay } from './Users/userModule.js';
 
 
 document.addEventListener("DOMContentLoaded", async function () {
@@ -25,6 +26,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         // renderOrders(orders, orderDetails);
 
         renderOrdersDisplay(products, orders, orderDetails);
+
+        renderUserDisplay(orders);
 
     } catch (error) {
         console.error('Error fetching data:', error.message);

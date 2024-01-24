@@ -70,6 +70,8 @@
             {{{body}}}
             {{!--! Body main end --}}
 
+
+
             {{!--* Body products main start --}}
             {{else}}
             {{#if isProductListPage}}
@@ -81,6 +83,8 @@
             {{#if isProductEditPage}}
             {{> products/product-edit}}
             {{!--* Body products main end --}}
+
+
 
             {{!-- Body Categories main start--}}
             {{else}}
@@ -94,6 +98,8 @@
             {{> categories/cate-edit}}
             {{!-- Body Categories main end--}}
 
+
+
             {{!-- !Body Orders main start--}}
             {{else}}
             {{#if isOrderListPage}}
@@ -104,9 +110,19 @@
             {{!-- !Body Orders main end--}}
 
 
+
+            {{!-- !Body Users main start--}}
+            {{else}}
+            {{#if isUserListPage}}
+            {{> users/user-list}}
+            {{!-- !Body Users main end--}}
+
+
+
             {{else}}
             {{#if is404Page}}
             {{> error/admin404}}
+            {{/if}}
             {{/if}}
             {{/if}}
             {{/if}}

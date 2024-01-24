@@ -37,6 +37,9 @@ adminController.showMorePageAdmin = (req, res) => {
     } else if (isCRUDPageProductAdmin(page) && page === 'order-detail') {
         res.render(`adminPartials/adminPage/orders/${page}`, { isOrderDetailPage: true });
     }
+    else if (isCRUDPageProductAdmin(page) && page === 'user-list') {
+        res.render(`adminPartials/adminPage/users/${page}`, { isUserListPage: true });
+    }
     else {
         // Nếu không tồn tại, chuyển hướng hoặc hiển thị trang 404
         res.render('error/404', { isHomePage: true, is404Page: true });
@@ -49,7 +52,7 @@ adminController.showAdmin404Page = (req, res) => {
 }
 
 function isCRUDPageProductAdmin(page) {
-    const validPages = ['product-list', 'product-create', 'product-edit','cate-list', 'cate-create', 'cate-edit','order-list','order-detail'];
+    const validPages = ['product-list', 'product-create', 'product-edit', 'cate-list', 'cate-create', 'cate-edit', 'order-list', 'order-detail', 'user-list'];
     // Kiểm tra xem trang hiện tại có thuộc danh sách trang quản lý sản phẩm không
     return validPages.includes(page);
 }
