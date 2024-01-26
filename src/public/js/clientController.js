@@ -3,8 +3,6 @@ import { API_URL } from './api.js';
 import fetchData from './api.js'; // Đảm bảo tên là fetchData
 import { decrementQuantity, validateQuantityInput, incrementQuantity } from './main.js';
 
-
-
 Promise.all([fetchData("products"), fetchData("categories")])
     .then(
         ([products, categories]) => {
@@ -60,49 +58,51 @@ const displayShopData = (products, categories) => {
 }; //* Show sản phẩm cho trang shop
 //*! Chỗ lấy API show sản phẩm và danh mục cho trang chủ
 const displayData = (products, container, categories) => {
-    container.innerHTML = "";
+    container ? container.innerHTML = "" : "";
+    if (products) {
+        products.forEach((product) => {
+            const imageUrl = product.image ? `/img/${product.image}` : "";
+            const viPrice = new Intl.NumberFormat("vi-VN", {
+                style: "currency",
+                currency: "VND",
+            });
 
-    products.forEach((product) => {
-        const imageUrl = product.image ? `/img/${product.image}` : "";
-        const viPrice = new Intl.NumberFormat("vi-VN", {
-            style: "currency",
-            currency: "VND",
-        });
+            const price = product.price;
+            const formattedPrice = viPrice.format(price);
 
-        const price = product.price;
-        const formattedPrice = viPrice.format(price);
+            const category = categories.find((cat) => cat.id === product.cate_id);
+            const categoryName = category ? category.title : "Unknown Category";
 
-        const category = categories.find((cat) => cat.id === product.cate_id);
-        const categoryName = category ? category.title : "Unknown Category";
-
-        const html = `
-            <div class="col-md-6 col-lg-4 col-xl-3">
-                <div class="rounded position-relative fruite-item">
-                    <div class="fruite-img" data-product-id="${product.id}">
-                        <a href="/shop-detail?id=${product.id}" class="product-link">
-                            <img src="${imageUrl}" class="img-fluid w-100 rounded-top" alt="IMG">
-                        </a>
-                    </div>
-                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px">
-                        ${categoryName}
-                    </div>
-                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                        <h4>${product.name}</h4>
-                        <div class="d-flex justify-content-between flex-lg-wrap">
-                            <p class="text-dark fs-5 fw-bold mb-0">
-                                ${formattedPrice} / kg
-                            </p>
-                            <button class="btnAddToCart btn border border-secondary rounded-pill px-3 text-primary" data-product-id="${product.id}">
-                                 <i class="fa fa-shopping-bag me-2 text-primary"></i>Thêm giỏ hàng
-                             </button>
+            const html = `
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div class="rounded position-relative fruite-item">
+                        <div class="fruite-img" data-product-id="${product.id}">
+                            <a href="/shop-detail?id=${product.id}" class="product-link">
+                                <img src="${imageUrl}" class="img-fluid w-100 rounded-top" alt="IMG">
+                            </a>
+                        </div>
+                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px">
+                            ${categoryName}
+                        </div>
+                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                            <h4>${product.name}</h4>
+                            <div class="d-flex justify-content-between flex-lg-wrap">
+                                <p class="text-dark fs-5 fw-bold mb-0">
+                                    ${formattedPrice} / kg
+                                </p>
+                                <button class="btnAddToCart btn border border-secondary rounded-pill px-3 text-primary" data-product-id="${product.id}">
+                                     <i class="fa fa-shopping-bag me-2 text-primary"></i>Thêm giỏ hàng
+                                 </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        `;
-        container.innerHTML += html;
-    });
-
+            `;
+            container.innerHTML += html;
+        });
+    } else {
+        console.error('products is undefined or null.');
+    }
 
     //* Sử lý nút thêm giỏ hàng
     // Sau khi HTML được thêm vào container, thêm sự kiện cho nút "Thêm giỏ hàng"
@@ -121,8 +121,6 @@ const displayData = (products, container, categories) => {
         });
     });
 };
-
-
 
 
 
@@ -769,6 +767,17 @@ window.onload = () => {
 };
 //Xử lý trang giỏ hàng
 
+const updateDataOnBothPages = (data) => {
+    // Cập nhật dữ liệu cho trang cart
+    if (document.getElementById("products-cart")) {
+        document.getElementById("products-cart").innerHTML = data;
+    }
+
+    // Cập nhật dữ liệu cho trang checkout
+    else if (document.getElementById("infor_Productart")) {
+        document.getElementById("infor_Productart").innerHTML = data;
+    }
+};
 
 
 const renderProductsCart = () => {
@@ -820,14 +829,14 @@ const renderProductsCart = () => {
                 </td>
                 <td>
                     <button id="deleteProductInCart${index}" class="btn btn-md rounded-circle bg-light border mt-4">
-                        <i class="fa fa-times text-danger"></i>
+                        <i class="fa-solid fa-trash"></i>
                     </button>
                 </td>
             </tr>
         `;
     });
 
-    document.getElementById("products-cart").innerHTML = data;
+    updateDataOnBothPages(data);
     // Sau khi đã thêm dữ liệu vào DOM, thêm sự kiện cho các nút
     productInCart.forEach((value, index) => {
         document.getElementById(`minusBtn${index}_${value.quantity}`).addEventListener('click', () => minusQuantity(index, value.quantity));
@@ -838,6 +847,10 @@ const renderProductsCart = () => {
 
     // Bắt sự kiện sau khi tất cả sản phẩm đã được tạo
 };
+
+
+
+
 const minusQuantity = (index, quantity) => {
     if (quantity > 1) {
         productInCart[index] = {
@@ -856,7 +869,6 @@ const minusQuantity = (index, quantity) => {
         renderProductsCart();
         totalMoney();
     }
-
 }
 
 const plusQuantity = (index) => {
@@ -875,8 +887,6 @@ const deleteProductInCart = (index) => {
     renderProductsCart();
     totalMoney();
 }
-
-
 const totalMoney = () => {
     if (productInCart != []) {
         let total = 0;
@@ -899,10 +909,141 @@ const totalMoney = () => {
 
 }
 
-renderProductsCart();
-calculatorTotal();
-totalMoney();
+if (document.getElementById("products-cart")) {
+    renderProductsCart();
+    calculatorTotal();
+    totalMoney();
 
+}
+
+
+//! Xử lý trang chi tiết đơn hàng
+const renderCheckout = () => {
+    let data = '';
+    let total = 0; // Thêm biến total để tính tổng giá trị
+
+    productInCart.forEach((value, index) => {
+        const viPrice = new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+        });
+
+        const price = value.price;
+        const formattedPrice = viPrice.format(price);
+
+        const total_money = value.quantity * value.price;
+        const formatTotalPrice = viPrice.format(total_money);
+
+        // Thêm giá trị vào total
+        total += total_money;
+
+        data += `
+            <tr>
+                <th scope="row">
+                    <div class="d-flex align-items-center mt-2">
+                        <img src="img/${value.image}" class="img-fluid rounded-circle"
+                            style="width: 90px; height: 90px;" alt="">
+                    </div>
+                </th>
+                <td class="py-5">${value.name}</td>
+                <td class="py-5">${formattedPrice}</td>
+                <td class="py-5" align="center">${value.quantity}</td>
+                <td class="py-5">${formatTotalPrice}</td>
+            </tr>
+        `;
+    });
+
+    // Thêm hàng Subtotal vào cuối biến data
+    const viTotal = new Intl.NumberFormat("vi-VN", {
+        style: "currency",
+        currency: "VND",
+    }).format(total);
+
+    data += `
+        <tr>
+            <th scope="row"></th>
+            <td class="py-5">
+            <p class="mb-0 text-dark py-3">Tạm tính</p>
+            </td>
+            <td class="py-5"></td>
+            <td class="py-5"></td>
+            <td class="py-5">
+                <div class="py-3 border-bottom border-top">
+                    <strong><p class="mb-0 text-dark">${viTotal}</p></strong>
+                </div>
+            </td>
+        </tr>
+    `;
+
+    updateDataOnBothPages(data);
+
+    // Bắt sự kiện sau khi tất cả sản phẩm đã được tạo
+};
+if (document.getElementById("infor_Productart") != null) {
+    renderCheckout();
+}
+
+
+// * Xử lý form thông tin giao hàng
+
+// Lắng nghe sự kiện khi người dùng rời khỏi trường input
+document.getElementById('fullName').addEventListener('blur', validateFullName);
+document.getElementById('address').addEventListener('blur', validateAddress);
+document.getElementById('phoneNumber').addEventListener('blur', validatePhoneNumber);
+document.getElementById('email').addEventListener('blur', validateEmail);
+
+// Hàm kiểm tra Họ và tên
+function validateFullName() {
+    const fullName = document.getElementById('fullName').value.trim();
+    console.log(fullName);
+    const fullNameError = document.getElementById('fullNameError');
+
+    if (fullName === '') {
+        fullNameError.textContent = 'Họ và tên không được để trống';
+    } else {
+        fullNameError.textContent = '';
+    }
+}
+
+// Hàm kiểm tra Địa chỉ
+function validateAddress() {
+    const address = document.getElementById('address').value.trim();
+    console.log(address);
+
+    const addressError = document.getElementById('addressError');
+
+    if (address === '') {
+        addressError.textContent = 'Địa chỉ không được để trống';
+    } else {
+        addressError.textContent = '';
+    }
+}
+
+// Hàm kiểm tra Số điện thoại
+function validatePhoneNumber() {
+    const phoneNumber = document.getElementById('phoneNumber').value.trim();
+    console.log(phoneNumber);
+    const phoneNumberError = document.getElementById('phoneNumberError');
+
+    if (phoneNumber === '') {
+        phoneNumberError.textContent = 'Số điện thoại không được để trống';
+    } else {
+        phoneNumberError.textContent = '';
+    }
+}
+
+// Hàm kiểm tra Email
+function validateEmail() {
+    const email = document.getElementById('email').value.trim();
+    console.log(email);
+    const emailError = document.getElementById('emailError');
+
+    if (email === '') {
+        emailError.textContent = 'Email không được để trống';
+    } else {
+        emailError.textContent = '';
+    }
+}
 
 
 
