@@ -497,6 +497,14 @@
       "cate_id": 2,
       "detail": "<p>4324</p>",
       "id": 53
+    },
+    {
+      "name": "jgjghjghjjhg",
+      "image": "best-product-4.jpg",
+      "price": "76775434",
+      "cate_id": 2,
+      "detail": "<p>767867868</p>",
+      "id": 54
     }
   ],
   "orders": [
@@ -975,6 +983,50 @@
       "product_id": 26,
       "quantity": 1,
       "unit_price": "25000"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "fullname": "Phan Lê Anh Tuấn",
+      "username": "lily",
+      "email": "sutten2004@gmail.com",
+      "password": "111111"
+    },
+    {
+      "id": 2,
+      "fullname": "",
+      "username": "admin",
+      "email": "admin1@gmail.com",
+      "password": "admin1111"
+    },
+    {
+      "fullname": "fsdf",
+      "username": "TuanLily",
+      "email": "df@gmial.com",
+      "password": "32424",
+      "id": 3
+    },
+    {
+      "fullname": "Long ",
+      "username": "Long",
+      "email": "conan@gmail.com",
+      "password": "111111",
+      "id": 4
+    },
+    {
+      "fullname": "ưerwer",
+      "username": "Longkk",
+      "email": "sutten2004@gmail.com",
+      "password": "111111",
+      "id": 5
+    },
+    {
+      "fullname": "Lilyco",
+      "username": "lilycute",
+      "email": "lilycute@gmail.com",
+      "password": "111111",
+      "id": 6
     }
   ]
 }

@@ -963,7 +963,7 @@ const renderCheckout = () => {
         <tr>
             <th scope="row"></th>
             <td class="py-5">
-            <p class="mb-0 text-dark py-3">Tạm tính</p>
+            <p class="mb-0 text-dark py-3">Thành tiền</p>
             </td>
             <td class="py-5"></td>
             <td class="py-5"></td>
@@ -1044,6 +1044,10 @@ function validateEmail() {
         emailError.textContent = '';
     }
 }
+
+
+//! Xử lý phần đăng nhập đăng ký
+
 
 
 
