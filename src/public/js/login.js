@@ -58,14 +58,16 @@ import fetchData from './api.js'; // Đảm bảo tên là fetchData
 })(jQuery);
 
 //! Sử lý phần đăng nhập
-
-
 class Authentication {
     constructor() {
+
         if (document.querySelector(".btn_Login")) {
             this.signIn();
         } else if (document.querySelector(".btn_SignUp")) {
             this.signUp();
+        }
+        if (document.querySelector("#userInfo")) {
+            this.updateUI();
         }
     }
 
@@ -100,6 +102,9 @@ class Authentication {
                     );
 
                     if (user) {
+                        localStorage.setItem('currentUser', JSON.stringify(user));
+
+
                         setTimeout(() => {
                             alert("Đăng nhập thành công!");
                             window.location.href = "/";
@@ -156,9 +161,72 @@ class Authentication {
             }
         });
     }
-}
 
-// Khởi tạo đối tượng Authentication
+
+    updateUI() {
+
+        const userIcon = document.querySelector(".fa-user");
+        const signInLink = document.querySelector("#userInfo");
+
+        // Lấy thông tin người dùng từ localStorage
+        const currentUserString = localStorage.getItem('currentUser');
+        const user = currentUserString ? JSON.parse(currentUserString) : null;
+
+        // Nếu có thông tin người dùng, hiển thị thông tin
+        if (user) {
+            // Loại bỏ icon user
+            if (userIcon) {
+                userIcon.style.display = "none";
+            }
+
+            // Hiển thị thông tin người dùng và loại bỏ link đăng nhập
+            if (signInLink) {
+                signInLink.innerHTML = `<div class="dropdown">
+                <button class="btn btn-outline-success dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="/img/user-account.png" alt="img" width="30">
+
+                    ${user.username}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="userDropdown">
+                    <li>
+                    <a class="dropdown-item" href="#" id="userInfo">
+                    <i class="fas fa-user"></i> 
+                    Thông tin tài khoản</a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                    <a class="dropdown-item" href="" id="signOut">
+                        <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                    </a>
+                    </li>
+                </ul>
+            </div>
+            `;
+            }
+            // Thêm sự kiện click cho nút "Đăng xuất"
+            const signOutButton = document.getElementById("signOut");
+            if (signOutButton) {
+                signOutButton.addEventListener("click", () => {
+                    // Xóa dữ liệu người dùng từ localStorage
+                    localStorage.removeItem('currentUser');
+                    // Cập nhật lại giao diện sau khi đăng xuất
+                    this.updateUI();
+                });
+            }
+        } else {
+            // Nếu không có thông tin người dùng, hiển thị icon và link đăng nhập
+            if (userIcon) {
+                userIcon.style.display = "block"; // hoặc "inline" tùy vào kiểu hiển thị mong muốn
+            }
+
+            if (signInLink) {
+                signInLink.innerHTML = `<a href="/signin" class="my-auto">
+                    <i class="fas fa-user fa-2x"></i>
+                </a>`;
+            }
+        }
+    }
+}
 new Authentication();
 
 

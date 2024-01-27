@@ -3578,14 +3578,14 @@ fieldset:disabled .btn {
 }
 
 .btn-outline-success {
-    color: #198754;
-    border-color: #198754
+    color: rgb(129, 196, 5);
+    border-color: rgb(129, 196, 5)
 }
 
 .btn-outline-success:hover {
     color: #fff;
-    background-color: #198754;
-    border-color: #198754
+    background-color: rgb(136, 209, 0);
+    border-color: rgb(136, 209, 0);
 }
 
 .btn-check:focus+.btn-outline-success,
@@ -3599,8 +3599,8 @@ fieldset:disabled .btn {
 .btn-outline-success.active,
 .btn-outline-success.dropdown-toggle.show {
     color: #fff;
-    background-color: #198754;
-    border-color: #198754
+    background-color: rgb(136, 209, 0);
+    border-color: rgb(136, 209, 0);
 }
 
 .btn-check:checked+.btn-outline-success:focus,
