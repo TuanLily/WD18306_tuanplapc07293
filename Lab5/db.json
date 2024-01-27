@@ -1,0 +1,104 @@
+{
+  "posts": [
+    {
+      "title": "Sample Post",
+      "author": "This is a sample post.",
+      "userId": 1,
+      "id": 2
+    },
+    {
+      "title": "Sample Post",
+      "author": "This is a sample post.",
+      "userId": 1,
+      "id": 3
+    },
+    {
+      "title": "Sample Post",
+      "author": "This is a sample post.",
+      "userId": 1,
+      "id": 4
+    },
+    {
+      "title": "Sample Post",
+      "author": "This is a sample post.",
+      "userId": 1,
+      "id": 5
+    },
+    {
+      "title": "Sample Post",
+      "author": "This is a sample post.",
+      "userId": 1,
+      "id": 6
+    },
+    {
+      "title": "Sample Post",
+      "author": "This is a sample post.",
+      "userId": 1,
+      "id": 7
+    },
+    {
+      "title": "Sample Post",
+      "author": "This is a sample post.",
+      "userId": 1,
+      "id": 8
+    },
+    {
+      "title": "Sample Post",
+      "author": "This is a sample post.",
+      "userId": 1,
+      "id": 9
+    },
+    {
+      "title": "Sample Post",
+      "author": "This is a sample post.",
+      "userId": 1,
+      "id": 10
+    },
+    {
+      "title": "Sample Post",
+      "author": "This is a sample post.",
+      "userId": 1,
+      "id": 11
+    },
+    {
+      "title": "Sample Post",
+      "author": "This is a sample post.",
+      "userId": 1,
+      "id": 12
+    },
+    {
+      "title": "Sample Post",
+      "author": "This is a sample post.",
+      "userId": 1,
+      "id": 13
+    },
+    {
+      "title": "Sample Post",
+      "author": "This is a sample post.",
+      "userId": 1,
+      "id": 14
+    },
+    {
+      "title": "Sample Post",
+      "author": "This is a sample post.",
+      "userId": 1,
+      "id": 15
+    },
+    {
+      "title": "Sample Post",
+      "author": "This is a sample post.",
+      "userId": 1,
+      "id": 16
+    },
+    {
+      "title": "Sample Post",
+      "author": "This is a sample post.",
+      "userId": 1,
+      "id": 17
+    }
+  ],
+  "comments": [],
+  "profile": {
+    "name": "typicode"
+  }
+}
