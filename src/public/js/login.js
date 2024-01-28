@@ -82,7 +82,6 @@ class Authentication {
     }
 
     signIn() {
-        console.log("Hello Login");
         const btnLogin = document.querySelector(".btn_Login");
 
         btnLogin.addEventListener("click", async (e) => {
@@ -120,7 +119,6 @@ class Authentication {
     }
 
     signUp() {
-        console.log("Hello SignUp");
         const btnSignUp = document.querySelector(".btn_SignUp");
 
         btnSignUp.addEventListener("click", async (e) => {
@@ -203,7 +201,6 @@ class Authentication {
             </div>
             `;
             }
-            // Thêm sự kiện click cho nút "Đăng xuất"
             const signOutButton = document.getElementById("signOut");
             if (signOutButton) {
                 signOutButton.addEventListener("click", () => {
@@ -216,7 +213,7 @@ class Authentication {
         } else {
             // Nếu không có thông tin người dùng, hiển thị icon và link đăng nhập
             if (userIcon) {
-                userIcon.style.display = "block"; // hoặc "inline" tùy vào kiểu hiển thị mong muốn
+                userIcon.style.display = "block";
             }
 
             if (signInLink) {

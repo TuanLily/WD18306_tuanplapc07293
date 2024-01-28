@@ -1045,10 +1045,3 @@ function validateEmail() {
     }
 }
 
-
-//! Xử lý phần đăng nhập đăng ký
-
-
-
-
-

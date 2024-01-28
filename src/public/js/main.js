@@ -1,3 +1,5 @@
+import { API_URL } from './api.js';
+
 (function ($) {
     "use strict";
 
@@ -197,4 +199,109 @@ export function incrementQuantity() {
         quantityInput.value = currentValue + 1;
     }
 }
+
+
+//! Xử lý phần tìm kiếm sản phẩm theo từ khóa hoặc giá tiền
+// Hàm hiển thị kết quả tìm kiếm
+const displaySearchResults = (products, container) => {
+    container ? container.innerHTML = "" : "";
+    if (products) {
+        let data = ""; // Initialize an empty string
+        data += `
+            <h4 class="text-primary justify-content-center text-center mb-3">Sản phẩm tìm được</h4>
+        `;
+
+        products.forEach((product) => {
+            const imageUrl = product.image ? `/img/${product.image}` : "";
+            const viPrice = new Intl.NumberFormat("vi-VN", {
+                style: "currency",
+                currency: "VND",
+            });
+
+            const price = product.price;
+            const formattedPrice = viPrice.format(price);
+
+            data += `
+                <div class="card col-md-3 mb-2 ms-3">
+                    <a href="#" class="mx-auto d-flex align-items-center justify-content-center" data-product-id="${product.id}">
+                        <img src="${imageUrl}" class="card-img-top" alt="img" style="width: 100%; height: 100%">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">${product.name}</h5>
+                        <p class="text-dark fs-5 fw-bold mb-0">${formattedPrice} / kg</p>
+                    </div>
+                </div>
+            `;
+        });
+
+        container.innerHTML += data;
+
+        // Thêm sự kiện cho các sản phẩm tìm được
+        addProductClickEvent();
+
+    } else {
+        console.error('products is undefined or null.');
+    }
+};
+
+// Hàm thêm sự kiện click cho sản phẩm
+const addProductClickEvent = () => {
+    const productLinks = document.querySelectorAll('#sampleProducts .card a[data-product-id]');
+
+    productLinks.forEach((link) => {
+        link.addEventListener('click', function (event) {
+            event.preventDefault();
+            const productId = this.getAttribute('data-product-id');
+
+            if (productId) {
+                redirectToShopDetail(productId);
+            } else {
+                console.error('Product ID not found');
+            }
+        });
+    });
+};
+
+// Hàm chuyển hướng đến trang shop-detail
+const redirectToShopDetail = (productId) => {
+    window.location.href = `/shop-detail?id=${productId}`;
+};
+
+
+// Hàm thực hiện tìm kiếm
+const performSearch = async () => {
+    const keyword = document.getElementById('searchInput').value.trim();
+    try {
+        // Gọi API để lấy tất cả sản phẩm
+        const allProductsResponse = await axios.get(`${API_URL}products`);
+        const allProducts = allProductsResponse.data;
+
+        // Lọc sản phẩm dựa trên từ khóa trong 'name'
+        const filteredProducts = allProducts.filter(product =>
+            product.name.toLowerCase().includes(keyword.toLowerCase()) ||
+            product.price.toString().includes(keyword)
+        );
+
+        // Hiển thị kết quả tìm kiếm trong box sản phẩm
+        const searchResultsContainer = document.getElementById('sampleProducts');
+        displaySearchResults(filteredProducts, searchResultsContainer);
+    } catch (error) {
+        console.error('Error searching products:', error.message);
+    }
+};
+
+// Thêm sự kiện khi nhấn nút trong JavaScript
+document.getElementById('searchButton').addEventListener('click', performSearch);
+
+// Thêm sự kiện khi nhấn Enter trong input
+document.getElementById('searchInput').addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+        performSearch();
+    }
+});
+
+
+
+
+
 
