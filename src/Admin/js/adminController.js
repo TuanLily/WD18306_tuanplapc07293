@@ -43,6 +43,9 @@ const handleCategoryEditForm = document.querySelector(".formEdit-Category");
 const displayCategories = async (categories) => {
     const categoriesTableBody = document.getElementById("categoriesTableBody");
 
+    // Sắp xếp danh sách danh mục
+    categories.sort((a, b) => b.id - a.id);
+
     // Xóa nội dung cũ của tbody
     categoriesTableBody ? categoriesTableBody.innerHTML = "" : " ";
 
@@ -50,7 +53,7 @@ const displayCategories = async (categories) => {
     await categories.forEach((category, index) => {
         const html = `
             <tr data-id='${category.id}'>
-                <th scope="row">${index + 1}</th>
+                <th scope="row">${category.id}</th>
                 <td>${category.title}</td>
                 <td class="w-3">
                     <a href="/cate-edit" class="btn-edit" data-id="${category.id}"><i class="fa-solid fa-pen-to-square"></i></a>
@@ -102,8 +105,6 @@ const displayCategories = async (categories) => {
                         this.disabled = true;
 
                         await axios.delete(`${API_URL}categories/${categoryId}`);
-                        // Sau khi xóa thành công, có thể cập nhật giao diện hoặc làm các thao tác khác cần thiết
-                        console.log(`Deleted category with ID: ${categoryId}`);
                         // Xóa thẻ <tr> khỏi DOM
                         trElement.remove();
                     } catch (error) {
@@ -218,6 +219,9 @@ const handleProductEditForm = document.querySelector(".formEdit-Product");
 const renderDisplayProducts = async (products, categories) => {
     const productsTableBody = document.getElementById("productsTableBody");
 
+    // Sắp xếp danh sách sản phẩm
+    products.sort((a, b) => b.id - a.id);
+
     // Xóa nội dung cũ của tbody
     productsTableBody ? productsTableBody.innerHTML = "" : " ";
 
@@ -236,7 +240,7 @@ const renderDisplayProducts = async (products, categories) => {
         const formattedPrice = viPrice.format(price);
         const html = `
          <tr data-id='${product.id}'>
-            <th scope="row">${index + 1}</th>
+            <th scope="row">${product.id}</th>
             <td>${product.name}</td>
             <td align="center"><img src="${imageUrl}" alt="IMG" width="80"></td>
             <td>${formattedPrice}</td>
@@ -322,45 +326,6 @@ const renderDisplayProducts = async (products, categories) => {
             }
         }) : "";
     };
-
-    // const loadCategories = async () => {
-    //     try {
-    //         const response = await axios.get(`${API_URL}categories`);
-    //         const categories = response.data;
-    //         // Gọi hàm để cập nhật dữ liệu cho select element
-    //         updateCategoriesDropdown(categories);
-    //     } catch (error) {
-    //         console.error(error.message);
-    //     }
-    // };
-
-
-    // Khi cần tải danh sách categories
-
-    // const updateCategoriesDropdown = (categories) => {
-    //     // Xóa bỏ tất cả các sự kiện 'change' trước đó
-    //     selectElement.removeEventListener('change', handleDropdownChange);
-
-    //     // Xóa tất cả các option hiện tại trong dropdown
-    //     selectElement.innerHTML = '<option selected>Vui lòng chọn danh mục</option>';
-
-    //     // Thêm các option mới từ dữ liệu categories
-    //     categories.forEach((category) => {
-    //         const option = document.createElement('option');
-    //         option.value = category.id;
-    //         option.text = category.title;
-    //         selectElement.appendChild(option);
-    //     });
-
-    //     // Thêm sự kiện để theo dõi sự thay đổi trong dropdown
-    //     selectElement.addEventListener('change', handleDropdownChange);
-    // };
-
-    // const handleDropdownChange = () => {
-    //     // Lấy giá trị option đã chọn
-    //     selectedValue = selectElement.value;
-    //     console.log(selectedValue);
-    // };
 
     window.onload(loadCategories());
 
@@ -621,7 +586,88 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 
-//! Quản lý đon hàng nè
+//! Quản lý thống kê
 
+document.addEventListener("DOMContentLoaded", async function () {
+    try {
+        // Gọi API để lấy danh mục và sản phẩm
+        const categoriesPromise = axios.get(`${API_URL}categories`);
+        const productsPromise = axios.get(`${API_URL}products`);
+
+        // Chờ cả hai Promise hoàn thành
+        const [categoriesResponse, productsResponse] = await Promise.all([categoriesPromise, productsPromise]);
+
+        const categories = categoriesResponse.data;
+        const products = productsResponse.data;
+
+        // Thực hiện thống kê theo danh mục
+        const categoryStats = calculateCategoryStats(categories, products);
+
+        // Hiển thị dữ liệu lên bảng HTML
+        displayStatsOnTable(categoryStats);
+    } catch (error) {
+        console.error('Error fetching data:', error.message);
+    }
+});
+
+// Hàm tính toán thông kê theo danh mục
+function calculateCategoryStats(categories, products) {
+    const categoryStats = [];
+
+    categories.forEach((category) => {
+        const productsInCategory = products.filter(product => product.cate_id === category.id);
+
+        if (productsInCategory.length > 0) {
+            // Chuyển đổi giá sản phẩm thành số và loại bỏ ký tự không mong muốn
+            const prices = productsInCategory.map(product => Number(product.price.replace(/[^0-9.-]+/g, '')));
+
+            const maxPrice = Math.max(...prices);
+            const minPrice = Math.min(...prices);
+
+            // Giữ 3 chữ số thập phân
+            const avgPrice = Number((prices.reduce((total, price) => total + price, 0) / prices.length).toFixed(3));
+
+            categoryStats.push({
+                categoryId: category.id,
+                categoryName: category.title,
+                maxPrice,
+                minPrice,
+                avgPrice,
+            });
+        }
+    });
+
+    return categoryStats;
+}
+
+
+// Hàm hiển thị dữ liệu lên bảng HTML
+function displayStatsOnTable(categoryStats) {
+    const tableBody = document.getElementById("statics_form");
+    let html = "";
+
+    categoryStats.forEach((category, index) => {
+        const viPrice = new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+        });
+
+        const formattedMaxPrice = viPrice.format(category.maxPrice);
+        const formattedMinPrice = viPrice.format(category.minPrice);
+        const formattedAvgPrice = viPrice.format(category.avgPrice);
+
+        html += `
+            <tr>
+                <th scope="row">${index + 1}</th>
+                <td>${category.categoryName}</td>
+                <td>${formattedMaxPrice}</td>
+                <td>${formattedMinPrice}</td>
+                <td>${formattedAvgPrice}</td>
+            </tr>
+        `;
+    });
+
+    tableBody.innerHTML = html;
+}
 
 

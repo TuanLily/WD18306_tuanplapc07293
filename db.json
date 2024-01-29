@@ -77,7 +77,7 @@
       "id": 21
     },
     {
-      "title": "Đồ đóng hộp 1",
+      "title": "t",
       "id": 22
     }
   ],
@@ -208,14 +208,6 @@
       "cate_id": 16,
       "price": "80000",
       "detail": "popular toy for kids",
-      "image": "pngegg (3).png"
-    },
-    {
-      "id": 17,
-      "name": "Quả bóng tennis",
-      "cate_id": 17,
-      "price": "15000",
-      "detail": "durable tennis ball for sports",
       "image": "pngegg (3).png"
     },
     {
@@ -371,14 +363,6 @@
       "image": "pngegg (3).png"
     },
     {
-      "id": 37,
-      "name": "Quả bóng tennis chuyên nghiệp",
-      "cate_id": 17,
-      "price": "25000",
-      "detail": "high-quality professional tennis ball",
-      "image": "pngegg (3).png"
-    },
-    {
       "id": 38,
       "name": "Khăn tắm mềm mại cao cấp",
       "cate_id": 18,
@@ -395,12 +379,12 @@
       "image": "pngegg (3).png"
     },
     {
-      "id": 40,
       "name": "Tai nghe Bluetooth chống ồn",
+      "image": "pngegg (3).png",
+      "price": "1200000000",
       "cate_id": 20,
-      "price": "120000",
       "detail": "noise-canceling Bluetooth headphones",
-      "image": "pngegg (3).png"
+      "id": 40
     },
     {
       "id": 41,
@@ -483,28 +467,20 @@
       "id": 50
     },
     {
-      "name": "Ảnh gái",
-      "image": "pngegg (5).png",
-      "price": "34220",
-      "cate_id": 3,
-      "detail": "<p>cxvcxxcgdfg</p>",
-      "id": 52
-    },
-    {
-      "name": "Dâu tằm",
-      "image": "fruite-item-2.jpg",
-      "price": "4324",
-      "cate_id": 2,
-      "detail": "<p>4324</p>",
-      "id": 53
-    },
-    {
-      "name": "jgjghjghjjhg",
+      "name": "Quả mơ mọng ngọt",
       "image": "best-product-4.jpg",
-      "price": "76775434",
-      "cate_id": 2,
-      "detail": "<p>767867868</p>",
+      "price": "40000",
+      "cate_id": 1,
+      "detail": "<p>Qua mong ngon</p>",
       "id": 54
+    },
+    {
+      "name": "Dâu tây bán chuyên",
+      "image": "featur-1.jpg",
+      "price": "44317",
+      "cate_id": 2,
+      "detail": "HEllo",
+      "id": 55
     }
   ],
   "orders": [
