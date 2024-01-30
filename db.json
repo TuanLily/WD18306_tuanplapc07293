@@ -469,6 +469,14 @@
       "cate_id": 1,
       "detail": "<p>Qua mong ngon</p>",
       "id": 54
+    },
+    {
+      "name": "Dâu tây bán chuyên",
+      "image": "featur-1.jpg",
+      "price": "44317",
+      "cate_id": 2,
+      "detail": "HEllo",
+      "id": 55
     }
   ],
   "orders": [
