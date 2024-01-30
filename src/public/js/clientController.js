@@ -1,7 +1,7 @@
-
-import { API_URL } from './api.js';
-import fetchData from './api.js'; // Đảm bảo tên là fetchData
+import fetchData, { API_URL } from './api.js';
 import { decrementQuantity, validateQuantityInput, incrementQuantity } from './main.js';
+
+
 
 Promise.all([fetchData("products"), fetchData("categories")])
     .then(
@@ -324,22 +324,54 @@ function getProductIdFromUrl() {
 }
 
 // Hàm fetch thông tin sản phẩm
+
 async function fetchProductDetail(productId) {
-    const apiUrl = API_URL + `products/${productId}`;
+    const apiUrl = `${API_URL}/products.json`;
 
     try {
-        const response = await axios.get(apiUrl);
+        const response = await axios.get(apiUrl, {
+            params: {
+                orderBy: '"id"',
+                equalTo: productId,
+                print: "pretty"
+            }
+        });
 
         if (response.status !== 200) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        return response.data;
+        const productDataArray = Object.values(response.data); // Chuyển đổi thành mảng
+        const productData = productDataArray[0]; // Lấy phần tử đầu tiên (vì chỉ có một phần tử)
+
+        console.log(productData);
+
+        // Lưu ý: Bạn cần xử lý dữ liệu tại đây để trích xuất thông tin cụ thể của sản phẩm
+
+        return productData;
     } catch (error) {
         console.error("Error fetching product detail:", error);
         throw error;
     }
 }
+
+
+// async function fetchProductDetail(productId) {
+//     const apiUrl = API_URL + `products/${productId}`;
+
+//     try {
+//         const response = await axios.get(apiUrl);
+
+//         if (response.status !== 200) {
+//             throw new Error(`HTTP error! Status: ${response.status}`);
+//         }
+
+//         return response.data;
+//     } catch (error) {
+//         console.error("Error fetching product detail:", error);
+//         throw error;
+//     }
+// }
 
 function displayProductDetail(product, categories) {
     const productDetailElement = document.querySelector("#product-detail");
@@ -715,7 +747,6 @@ const fetchProducts = async () => {
         throw error;
     }
 };
-
 
 
 // Sử dụng hàm fetchProducts để lấy dữ liệu

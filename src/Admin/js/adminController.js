@@ -450,11 +450,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 const categoryName = await getCategoryName(productData.cate_id);
                 document.getElementById('priviewOldCategory').innerText = categoryName;
 
-                // console.log(
-                //     document.getElementById('checkCategory').value = productData.cate_id,
-                //     document.getElementById('checkCategory').innerText = categoryName
-                // Để nữa được thì sửa sau
-                // );
             } else {
                 console.log('Product data not found');
             }
@@ -644,7 +639,6 @@ function calculateCategoryStats(categories, products) {
 
     return categoryStats;
 }
-
 
 // Hàm hiển thị dữ liệu lên bảng HTML
 function displayStatsOnTable(categoryStats) {

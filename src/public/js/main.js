@@ -273,7 +273,7 @@ const performSearch = async () => {
     const keyword = document.getElementById('searchInput').value.trim();
     try {
         // Gọi API để lấy tất cả sản phẩm
-        const allProductsResponse = await axios.get(`${API_URL}products`);
+        const allProductsResponse = await axios.get(`${API_URL}products.json`);
         const allProducts = allProductsResponse.data;
 
         // Lọc sản phẩm dựa trên từ khóa trong 'name'

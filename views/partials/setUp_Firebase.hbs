@@ -1,0 +1,27 @@
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "./firebase/app";
+    import { getAnalytics } from "./firebase/analytics";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyA0FHm8CBjiRvxLvYI0wh4GFinvbIQADbA",
+        authDomain: "wd18306-pc07293-ecmascript.firebaseapp.com",
+        databaseURL: "https://wd18306-pc07293-ecmascript-default-rtdb.firebaseio.com",
+        projectId: "wd18306-pc07293-ecmascript",
+        storageBucket: "wd18306-pc07293-ecmascript.appspot.com",
+        messagingSenderId: "202384124848",
+        appId: "1:202384124848:web:a9c9ffa2546efe60cd4475",
+        measurementId: "G-XSNXN5XSTX"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+    // Initialize Realtime Database and get a reference to the service
+    const database = getDatabase(app);
+
+</script>

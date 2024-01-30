@@ -75,6 +75,14 @@
     {
       "title": "đồ chay",
       "id": 21
+    },
+    {
+      "title": "kem chay",
+      "id": 22
+    },
+    {
+      "title": "kem",
+      "id": 23
     }
   ],
   "products": [
@@ -165,14 +173,6 @@
       "price": "35000",
       "detail": "refreshing fruit-scented body wash",
       "image": "vegetable-item-6.jpg"
-    },
-    {
-      "id": 12,
-      "name": "Đèn LED chiếu sáng",
-      "cate_id": 12,
-      "price": "120000",
-      "detail": "energy-efficient lighting solution",
-      "image": "pngegg.png"
     },
     {
       "id": 13,
@@ -377,7 +377,7 @@
     {
       "name": "Tai nghe Bluetooth chống ồn",
       "image": "pngegg (3).png",
-      "price": "1200000000",
+      "price": "110000",
       "cate_id": 20,
       "detail": "noise-canceling Bluetooth headphones",
       "id": 40
@@ -469,14 +469,6 @@
       "cate_id": 1,
       "detail": "<p>Qua mong ngon</p>",
       "id": 54
-    },
-    {
-      "name": "Dâu tây bán chuyên",
-      "image": "featur-1.jpg",
-      "price": "44317",
-      "cate_id": 2,
-      "detail": "HEllo",
-      "id": 55
     }
   ],
   "orders": [
@@ -999,6 +991,13 @@
       "email": "lilycute@gmail.com",
       "password": "111111",
       "id": 6
+    },
+    {
+      "fullname": "good",
+      "username": "good1111",
+      "email": "good@gmail.com",
+      "password": "111111",
+      "id": 7
     }
   ]
 }
