@@ -110,18 +110,23 @@
             {{!-- !Body Orders main end--}}
 
 
-
             {{!-- !Body Users main start--}}
             {{else}}
             {{#if isUserListPage}}
             {{> users/user-list}}
             {{!-- !Body Users main end--}}
 
+            {{!-- !Body Statistic main start--}}
+            {{else}}
+            {{#if isStatisticsListPage}}
+            {{> statistics/statistics-list}}
+            {{!-- !Body Statistic main end--}}
 
 
             {{else}}
             {{#if is404Page}}
             {{> error/admin404}}
+            {{/if}}
             {{/if}}
             {{/if}}
             {{/if}}
