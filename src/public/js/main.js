@@ -224,7 +224,7 @@ const displaySearchResults = (products, container) => {
             data += `
                 <div class="card col-md-3 mb-2 ms-3">
                     <a href="#" class="mx-auto d-flex align-items-center justify-content-center" data-product-id="${product.id}">
-                        <img src="${imageUrl}" class="card-img-top" alt="img" style="width: 100%; height: 100%">
+                        <img src="${imageUrl}" class="card-img-top mt-3" alt="img" style="width: 100%; height: 100%">
                     </a>
                     <div class="card-body">
                         <h5 class="card-title text-center">${product.name}</h5>
@@ -267,6 +267,8 @@ const redirectToShopDetail = (productId) => {
     window.location.href = `/shop-detail?id=${productId}`;
 };
 
+// Hàm để kiểm tra xem một đối tượng có giá trị null hay không
+const isNotNull = (obj) => obj !== null && obj !== undefined;
 
 // Hàm thực hiện tìm kiếm
 const performSearch = async () => {
@@ -278,8 +280,9 @@ const performSearch = async () => {
 
         // Lọc sản phẩm dựa trên từ khóa trong 'name'
         const filteredProducts = allProducts.filter(product =>
-            product.name.toLowerCase().includes(keyword.toLowerCase()) ||
-            product.price.toString().includes(keyword)
+            isNotNull(product) &&
+            (product.name.toLowerCase().includes(keyword.toLowerCase()) ||
+                product.price.toString().includes(keyword))
         );
 
         // Hiển thị kết quả tìm kiếm trong box sản phẩm

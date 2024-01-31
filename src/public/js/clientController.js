@@ -14,6 +14,11 @@ const displayShopData = (products, categories) => {
     const productsData = document.querySelector(".products-data");
 
     products.forEach((product) => {
+
+        // Kiểm tra nếu product hoặc cate_id là null thì bỏ qua
+        if (!product || product.cate_id === null) {
+            return;
+        }
         const imageUrl = product.image ? `/img/${product.image}` : "";
         const viPrice = new Intl.NumberFormat("vi-VN", {
             style: "currency",
@@ -61,6 +66,10 @@ const displayData = (products, container, categories) => {
     container ? container.innerHTML = "" : "";
     if (products) {
         products.forEach((product) => {
+
+            if (!product || product.cate_id === null) {
+                return;
+            }
             const imageUrl = product.image ? `/img/${product.image}` : "";
             const viPrice = new Intl.NumberFormat("vi-VN", {
                 style: "currency",
@@ -126,6 +135,8 @@ const displayData = (products, container, categories) => {
 
 //*! Chỗ lấy API show sản phẩm và danh mục cho load sản phẩm theo danh mục
 
+// Hàm để kiểm tra xem một đối tượng có giá trị null hay không
+const isNotNull = (obj) => obj !== null && obj !== undefined;
 
 document.addEventListener("DOMContentLoaded", async () => {
     try {
@@ -133,6 +144,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const categoryTabs = document.getElementById('categoryTabs');
         const tabContent = document.getElementById('tabContent');
         let selectedCategoryId = null; // Biến để lưu trữ danh mục đã chọn
+
 
         if (categoryTabs && tabContent) {
             // Tạo tab cho tất cả sản phẩm
@@ -195,6 +207,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             // Tạo tab và tab content cho từng danh mục
             categories.forEach(category => {
+                if (!isNotNull(category)) {
+                    return;
+                }
                 const tabItem = document.createElement('li');
                 tabItem.className = 'nav-item';
 
@@ -248,7 +263,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     tabLink.classList.add('active');
 
                     // Lọc sản phẩm theo danh mục và hiển thị
-                    const productsByCategory = products.filter(product => product.cate_id === category.id);
+                    const productsByCategory = products.filter(product => isNotNull(product) && product.cate_id === category.id);
                     displayData(productsByCategory, productsDataContainer, categories);
                 });
             });
@@ -748,13 +763,17 @@ const addToCart = (id) => {
     let checkProduct = productInCart.some(value => value.id === id);
     if (!checkProduct) {
         // Tìm thông tin sản phẩm từ danh sách sản phẩm theo ID
-        let findProduct = productsData.find(product => product.id === id);
-        productInCart.unshift({
-            ...findProduct,
-            quantity: 1
-        });
-        saveToLocalStorage();
-        calculatorTotal();
+        let findProduct = productsData.find(product => product && product.id === id);
+
+        // Kiểm tra xem findProduct có giá trị và khác null
+        if (findProduct && findProduct !== null) {
+            productInCart.unshift({
+                ...findProduct,
+                quantity: 1
+            });
+            saveToLocalStorage();
+            calculatorTotal();
+        }
     } else {
         const getIndex = productInCart.findIndex(value => value.id === id);
         const product = productInCart.find(value => value.id === id);
@@ -780,7 +799,8 @@ let indexLoadPage = () => {
 window.onload = () => {
     indexLoadPage();
 };
-//Xử lý trang giỏ hàng
+
+// *Xử lý trang giỏ hàng
 
 const updateDataOnBothPages = (data) => {
     // Cập nhật dữ liệu cho trang cart

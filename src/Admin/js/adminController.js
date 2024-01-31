@@ -1,4 +1,3 @@
-
 import fetchData from '/js/api.js';
 import { API_URL } from '/js/api.js';
 import { showAlertAndRedirect } from './extension.js';
@@ -188,7 +187,6 @@ const displayCategories = async (categories) => {
         try {
             const currentData = await axios.get(`${API_URL}categories.json`);
             const currentCategories = Object.values(currentData.data || {});
-            console.log(currentCategories);
 
             const nextId = currentCategories.length > 0 ? Math.max(...currentCategories.map(category => Number(category.id))) + 1 : 1;
 
@@ -304,6 +302,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     }
                 });
 
+
                 const categoryData = response.data;
 
                 // Kiểm tra xem categoryData có dữ liệu và có category với id tương ứng không
@@ -337,7 +336,6 @@ const handleProductForm = document.querySelector(".form-product");
 const handleProductEditForm = document.querySelector(".formEdit-Product");
 
 const renderDisplayProducts = async (products, categories) => {
-    console.log(products);
 
     products = products.filter(product => product !== null);
 
