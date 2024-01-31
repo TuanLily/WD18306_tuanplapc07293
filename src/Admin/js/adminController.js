@@ -835,17 +835,19 @@ document.addEventListener("DOMContentLoaded", async function () {
 document.addEventListener("DOMContentLoaded", async function () {
     try {
         // Gọi API để lấy danh mục và sản phẩm
-        const categoriesPromise = axios.get(`${API_URL}categories`);
-        const productsPromise = axios.get(`${API_URL}products`);
+        const categoriesPromise = axios.get(`${API_URL}categories.json`);
+        const productsPromise = axios.get(`${API_URL}products.json`);
 
         // Chờ cả hai Promise hoàn thành
         const [categoriesResponse, productsResponse] = await Promise.all([categoriesPromise, productsPromise]);
 
         const categories = categoriesResponse.data;
-        const products = productsResponse.data;
+        // Trước khi sử dụng productsResponse.data, lọc bỏ các phần tử có giá trị null
+        const products = productsResponse.data.filter(product => product !== null);
 
-        // Thực hiện thống kê theo danh mục
+        // Tiếp tục xử lý với mảng products đã lọc
         const categoryStats = calculateCategoryStats(categories, products);
+
 
         // Hiển thị dữ liệu lên bảng HTML
         displayStatsOnTable(categoryStats);
@@ -854,6 +856,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 });
 
+
 // Hàm tính toán thông kê theo danh mục
 function calculateCategoryStats(categories, products) {
     const categoryStats = [];
@@ -861,11 +864,11 @@ function calculateCategoryStats(categories, products) {
     // Sắp xếp thông tin thống kê từ mới đến cũ
     categories.sort((a, b) => b.id - a.id);
 
-
     categories.forEach((category) => {
+        // Lọc ra các sản phẩm có cate_id và khác null
         const productsInCategory = products.filter(product => product.cate_id === category.id);
 
-        if (productsInCategory.length > 0) {
+        if (productsInCategory.length > 0 && category.id && category.title) {
             // Chuyển đổi giá sản phẩm thành số và loại bỏ ký tự không mong muốn
             const prices = productsInCategory.map(product => Number(product.price.replace(/[^0-9.-]+/g, '')));
 
