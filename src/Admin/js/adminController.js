@@ -41,6 +41,7 @@ const handleCategoryEditForm = document.querySelector(".formEdit-Category");
 
 // *Hàm để hiển thị danh sách danh mục
 const displayCategories = async (categories) => {
+    categories = categories.filter(category => category !== null);
 
     const categoriesTableBody = document.getElementById("categoriesTableBody");
 
@@ -103,7 +104,7 @@ const displayCategories = async (categories) => {
 
                 if (categoryId && trElement) {
                     try {
-                        // Gửi yêu cầu GET để lấy dữ liệu danh mục
+                        // Gửi yêu cầu GET để lấy danh sách các khóa trong object
                         const response = await axios.get(`${API_URL}categories.json`, {
                             params: {
                                 orderBy: '"id"',
@@ -115,18 +116,17 @@ const displayCategories = async (categories) => {
                         const categoryData = response.data;
 
                         if (categoryData) {
-                            // Lấy danh sách các khóa (keys) trong object
-                            const categoryKeys = Object.keys(categoryData);
-                            // Lấy ID đầu tiên từ danh sách khóa
-                            const firstCategoryId = categoryKeys[0];
-
-                            // Gửi yêu cầu DELETE để xóa danh mục
-                            await axios.delete(`${API_URL}categories/${firstCategoryId}.json`);
+                            // Lặp qua danh sách các khóa (keys) trong object
+                            for (const categoryIdKey in categoryData) {
+                                if (categoryData.hasOwnProperty(categoryIdKey)) {
+                                    // Gửi yêu cầu DELETE để xóa từng danh mục
+                                    await axios.delete(`${API_URL}categories/${categoryIdKey}.json`);
+                                    console.log(`Deleted category with ID: ${categoryIdKey}`);
+                                }
+                            }
 
                             // Xóa thẻ <tr> khỏi DOM
                             trElement.remove();
-
-                            console.log(`Deleted category with ID: ${firstCategoryId}`);
                         } else {
                             console.log('Category data not found');
                         }
@@ -137,6 +137,7 @@ const displayCategories = async (categories) => {
                         this.disabled = false;
                     }
                 }
+
             } else {
                 // Người dùng đã hủy xác nhận
                 console.log('Delete cancelled');
@@ -336,6 +337,10 @@ const handleProductForm = document.querySelector(".form-product");
 const handleProductEditForm = document.querySelector(".formEdit-Product");
 
 const renderDisplayProducts = async (products, categories) => {
+    console.log(products);
+
+    products = products.filter(product => product !== null);
+
     const productsTableBody = document.getElementById("productsTableBody");
 
     // Sắp xếp danh sách sản phẩm
@@ -394,13 +399,14 @@ const renderDisplayProducts = async (products, categories) => {
 
 
     // * Xử lý sự kiện click nút xóa
+
     const deleteButtons = document.querySelectorAll('.btn-pro-del');
     deleteButtons.forEach((btn) => {
         btn.addEventListener('click', async function (e) {
             e.preventDefault();
             const productID = this.getAttribute('data-id');
             const productName = this.getAttribute('data-title');
-            const confirmMessage = `Bạn có chắc muốn xóa danh mục với tên "${productName}" không?`;
+            const confirmMessage = `Bạn có chắc muốn xóa sản phẩm với tên "${productName}" không?`;
 
             // Hiển thị hộp thoại xác nhận
             if (confirm(confirmMessage)) {
@@ -409,14 +415,38 @@ const renderDisplayProducts = async (products, categories) => {
 
                 if (productID && trElement) {
                     try {
-                        // Tạm thời vô hiệu hóa nút xóa
-                        this.disabled = true;
+                        // Gửi yêu cầu GET để lấy dữ liệu sản phẩm
+                        const response = await axios.get(`${API_URL}products.json`, {
+                            params: {
+                                orderBy: '"id"',
+                                equalTo: productID,
+                                print: "pretty"
+                            }
+                        });
 
-                        await axios.delete(`${API_URL}products/${productID}`);
-                        // Sau khi xóa thành công, có thể cập nhật giao diện hoặc làm các thao tác khác cần thiết
-                        console.log(`Deleted product with ID: ${productID}`);
-                        // Xóa thẻ <tr> khỏi DOM
-                        trElement.remove();
+                        const productData = response.data;
+
+                        if (productData) {
+                            // Lấy danh sách các khóa (keys) trong object
+                            const productKeys = Object.keys(productData);
+
+                            if (productKeys.length > 0) {
+                                // Lấy ID đầu tiên từ danh sách khóa
+                                const firstProductID = productKeys[0];
+
+                                // Gửi yêu cầu DELETE để xóa sản phẩm
+                                await axios.delete(`${API_URL}products/${firstProductID}.json`);
+
+                                // Sau khi xóa thành công, có thể cập nhật giao diện hoặc làm các thao tác khác cần thiết
+                                console.log(`Deleted product with ID: ${firstProductID}`);
+                                // Xóa thẻ <tr> khỏi DOM
+                                trElement.remove();
+                            } else {
+                                console.log('No product data found');
+                            }
+                        } else {
+                            console.log('Product data not found');
+                        }
                     } catch (error) {
                         console.log(error.message);
                     } finally {
@@ -430,6 +460,44 @@ const renderDisplayProducts = async (products, categories) => {
             }
         });
     });
+
+
+    // const deleteButtons = document.querySelectorAll('.btn-pro-del');
+    // deleteButtons.forEach((btn) => {
+    //     btn.addEventListener('click', async function (e) {
+    //         e.preventDefault();
+    //         const productID = this.getAttribute('data-id');
+    //         const productName = this.getAttribute('data-title');
+    //         const confirmMessage = `Bạn có chắc muốn xóa danh mục với tên "${productName}" không?`;
+
+    //         // Hiển thị hộp thoại xác nhận
+    //         if (confirm(confirmMessage)) {
+    //             // Thực hiện xóa nếu người dùng xác nhận
+    //             const trElement = this.closest('tr');
+
+    //             if (productID && trElement) {
+    //                 try {
+    //                     // Tạm thời vô hiệu hóa nút xóa
+    //                     this.disabled = true;
+
+    //                     await axios.delete(`${API_URL}products/${productID}`);
+    //                     // Sau khi xóa thành công, có thể cập nhật giao diện hoặc làm các thao tác khác cần thiết
+    //                     console.log(`Deleted product with ID: ${productID}`);
+    //                     // Xóa thẻ <tr> khỏi DOM
+    //                     trElement.remove();
+    //                 } catch (error) {
+    //                     console.log(error.message);
+    //                 } finally {
+    //                     // Kích hoạt lại nút xóa sau khi hoàn thành yêu cầu
+    //                     this.disabled = false;
+    //                 }
+    //             }
+    //         } else {
+    //             // Người dùng đã hủy xác nhận
+    //             console.log('Delete cancelled');
+    //         }
+    //     });
+    // });
 
     //* Sử lý chức năng create product
 
@@ -448,9 +516,9 @@ const renderDisplayProducts = async (products, categories) => {
 
     window.onload(loadCategories());
 
+    // Thêm sự kiện lắng nghe cho form thêm sản phẩm
     handleProductForm ? handleProductForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        // await loadCategories();
 
         const name = document.getElementById('inputProduct').value.trim();
         const price = document.getElementById('inputPrice').value.trim();
@@ -472,8 +540,7 @@ const renderDisplayProducts = async (products, categories) => {
         await loadCategories();
 
         // Sử dụng selectedValue từ module
-        console.log(selectedValue);
-
+        selectedValue;
         // Kiểm tra xem các trường có đúng giá trị không và hiển thị lỗi nếu cần
         let hasError = false;
 
@@ -520,8 +587,18 @@ const renderDisplayProducts = async (products, categories) => {
         // Thực hiện các thao tác cần thiết khi thông tin hợp lệ
         if (!hasError) {
             try {
+                const currentData = await axios.get(`${API_URL}products.json`);
+                let currentProducts = Object.values(currentData.data || {});
+
+                // Lọc ra các sản phẩm có giá trị không phải null
+                currentProducts = currentProducts.filter(product => product !== null);
+
+                const nextId = currentProducts.length > 0 ? Math.max(...currentProducts.map(product => Number(product.id))) + 1 : 1;
+
+
                 // Tiếp tục xử lý, ví dụ: gửi yêu cầu đến server để thêm sản phẩm
-                await axios.post(`${API_URL}products`, {
+                await axios.put(`${API_URL}products/${nextId}.json`, {
+                    id: nextId,
                     name: name,
                     image: inputImage,
                     price: price,
@@ -531,41 +608,57 @@ const renderDisplayProducts = async (products, categories) => {
 
                 // Sau khi thêm sản phẩm thành công, có thể chuyển hướng hoặc làm các thao tác khác cần thiết
                 console.log('Added new product');
-                showAlertAndRedirect("Thêm sản phẩm thành công", "/product-list")
+                showAlertAndRedirect("Thêm sản phẩm thành công", "/product-list");
+
+                // Tải lại danh sách sản phẩm sau khi thêm mới
+                await loadProducts();
             } catch (error) {
                 console.log(error.message);
             }
+
         }
     }) : "";
 
+
     // Gọi hàm showImage để kích hoạt sự kiện change
     showImage();
-
 
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('id');
-    const response = await axios.get(`${API_URL}products/${productId}`);
-    const productData = response.data;
+
     if (productId) {
         try {
-            if (productData) {
-                console.log(productData);
+            const response = await axios.get(`${API_URL}products.json`, {
+                params: {
+                    orderBy: '"id"',
+                    equalTo: productId,
+                    print: "pretty"
+                }
+            });
 
-                document.getElementById('inputProduct').value = productData.name;
-                document.getElementById('inputPrice').value = productData.price;
+            const productData = response.data;
+            const productsArray = Object.values(productData);
+
+            // Nếu bạn chỉ muốn lấy thông tin của sản phẩm đầu tiên trong mảng (trong trường hợp này, chỉ có một sản phẩm)
+            const firstProduct = productsArray[0];
+
+            if (firstProduct) {
+
+                document.getElementById('inputProduct').value = firstProduct.name;
+                document.getElementById('inputPrice').value = firstProduct.price;
 
                 // Sử dụng phương thức của Summernote để cập nhật giá trị
-                $('.summernote').summernote('code', productData.detail);
+                $('.summernote').summernote('code', firstProduct.detail);
 
                 document.getElementById('previewImage').innerHTML = `
                     <span>Hình cũ: </span>
-                    <img src="/img/${productData.image}" alt="" width="120">`;
+                    <img src="/img/${firstProduct.image}" alt="" width="120">`;
 
                 // Lấy tên của danh mục dựa trên cate_id
-                const categoryName = await getCategoryName(productData.cate_id);
+                const categoryName = await getCategoryName(firstProduct.cate_id);
                 document.getElementById('priviewOldCategory').innerText = categoryName;
 
             } else {
@@ -584,18 +677,55 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Hàm để lấy tên danh mục dựa trên cate_id
     async function getCategoryName(cateId) {
         try {
-            const response = await axios.get(`${API_URL}categories/${cateId}`);
+            const response = await axios.get(`${API_URL}categories.json`, {
+                params: {
+                    orderBy: '"id"',
+                    equalTo: cateId,
+                    print: "pretty"
+                }
+            });
             const categoryData = response.data;
-            return categoryData ? categoryData.title : "Unknown Category";
+            const categorieArray = Object.values(categoryData);
+
+            // Nếu bạn chỉ muốn lấy thông tin của sản phẩm đầu tiên trong mảng (trong trường hợp này, chỉ có một sản phẩm)
+            const firstCategory = categorieArray[0];
+            return firstCategory ? firstCategory.title : "Unknown Category";
         } catch (error) {
             console.log(`Error fetching category data for id ${cateId}: ${error.message}`);
             return "Unknown Category";
         }
     }
 
+
+
+    async function getProductData(productId) {
+        try {
+            const response = await axios.get(`${API_URL}products.json`, {
+                params: {
+                    orderBy: '"id"',
+                    equalTo: productId,
+                    print: "pretty"
+                }
+            });
+
+            return response.data;
+        } catch (error) {
+            console.log(`Error fetching product data for id ${productId}: ${error.message}`);
+            return null;
+        }
+    }
     // * Sửa thông tin sản phẩm
     handleProductEditForm ? handleProductEditForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+
+        const productData = await getProductData(productId);
+        const productsArray = Object.values(productData);
+
+        // Nếu bạn chỉ muốn lấy thông tin của sản phẩm đầu tiên trong mảng (trong trường hợp này, chỉ có một sản phẩm)
+        const firstProduct = productsArray[0];
+        console.log('firstProduct', firstProduct);
+
+
 
         const name = document.getElementById('inputProduct').value.trim();
         const price = document.getElementById('inputPrice').value.trim();
@@ -646,7 +776,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
 
         // Lấy giá trị option đã chọn
-        const selectValueCate = selectedValue;
+        const selectValueCate = selectedValue || firstProduct.cate_id;
 
         // Biến để kiểm tra xem người dùng đã chọn danh mục mới hay không
         let updatedCategory = false;
@@ -665,34 +795,34 @@ document.addEventListener("DOMContentLoaded", async function () {
             updatedImage = true;
         }
 
+
+
         if (!hasError) {
             try {
-                // Nếu người dùng đã chọn danh mục mới hoặc chọn ảnh mới, cập nhật sản phẩm
                 if (updatedCategory || updatedImage) {
-                    await axios.put(`${API_URL}products/${productId}`, {
+                    await axios.patch(`${API_URL}products/${productId}.json`, {
                         name: name,
-                        image: selectValueImage || productData.image,
+                        image: selectValueImage || firstProduct.image,
                         price: price,
                         cate_id: parseInt(selectValueCate),
                         detail: detail
                     });
                 } else {
-                    // Ngược lại, sử dụng danh mục và ảnh hiện tại từ dữ liệu sản phẩm
-                    await axios.put(`${API_URL}products/${productId}`, {
+                    await axios.patch(`${API_URL}products/${productId}.json`, {
                         name: name,
-                        image: productData.image,
+                        image: firstProduct.image,
                         price: price,
-                        cate_id: productData.cate_id,
+                        cate_id: firstProduct.cate_id,
                         detail: detail
                     });
                 }
 
-                // Sau khi cập nhật sản phẩm thành công, có thể chuyển hướng hoặc làm các thao tác khác cần thiết
                 console.log('Updated product');
                 showAlertAndRedirect(`Cập nhật sản phẩm "${name}" thành công`, "/product-list");
             } catch (error) {
                 console.log(error.message);
             }
+
         }
 
     }) : "";
