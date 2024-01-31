@@ -41,6 +41,7 @@ const handleCategoryEditForm = document.querySelector(".formEdit-Category");
 
 // *Hàm để hiển thị danh sách danh mục
 const displayCategories = async (categories) => {
+
     const categoriesTableBody = document.getElementById("categoriesTableBody");
 
     // Sắp xếp danh sách danh mục
@@ -78,6 +79,8 @@ const displayCategories = async (categories) => {
             if (categoryId) {
                 // Chuyển hướng đến trang /cate-edit với ID categoryId
                 window.location.href = `/cate-edit?id=${categoryId}`;
+
+                console.log(window.location.href = `/cate-edit?id=${categoryId}`);
             } else {
                 console.log('CategoryId is null or undefined');
             }
@@ -100,12 +103,33 @@ const displayCategories = async (categories) => {
 
                 if (categoryId && trElement) {
                     try {
-                        // Tạm thời vô hiệu hóa nút xóa
-                        this.disabled = true;
+                        // Gửi yêu cầu GET để lấy dữ liệu danh mục
+                        const response = await axios.get(`${API_URL}categories.json`, {
+                            params: {
+                                orderBy: '"id"',
+                                equalTo: categoryId,
+                                print: "pretty"
+                            }
+                        });
 
-                        await axios.delete(`${API_URL}categories/${categoryId}`);
-                        // Xóa thẻ <tr> khỏi DOM
-                        trElement.remove();
+                        const categoryData = response.data;
+
+                        if (categoryData) {
+                            // Lấy danh sách các khóa (keys) trong object
+                            const categoryKeys = Object.keys(categoryData);
+                            // Lấy ID đầu tiên từ danh sách khóa
+                            const firstCategoryId = categoryKeys[0];
+
+                            // Gửi yêu cầu DELETE để xóa danh mục
+                            await axios.delete(`${API_URL}categories/${firstCategoryId}.json`);
+
+                            // Xóa thẻ <tr> khỏi DOM
+                            trElement.remove();
+
+                            console.log(`Deleted category with ID: ${firstCategoryId}`);
+                        } else {
+                            console.log('Category data not found');
+                        }
                     } catch (error) {
                         console.log(error.message);
                     } finally {
@@ -120,6 +144,39 @@ const displayCategories = async (categories) => {
         });
     });
 
+    // deleteButtons.forEach((btn) => {
+    //     btn.addEventListener('click', async function (e) {
+    //         e.preventDefault();
+    //         const categoryId = this.getAttribute('data-id');
+    //         const categoryTitle = this.getAttribute('data-title');
+    //         const confirmMessage = `Bạn có chắc muốn xóa danh mục với tên "${categoryTitle}" không?`;
+
+    //         // Hiển thị hộp thoại xác nhận
+    //         if (confirm(confirmMessage)) {
+    //             const trElement = this.closest('tr');
+
+    //             if (categoryId && trElement) {
+    //                 try {
+    //                     // Tạm thời vô hiệu hóa nút xóa
+    //                     this.disabled = true;
+
+    //                     await axios.delete(`${API_URL}categories/`);
+    //                     // Xóa thẻ <tr> khỏi DOM
+    //                     trElement.remove();
+    //                 } catch (error) {
+    //                     console.log(error.message);
+    //                 } finally {
+    //                     // Kích hoạt lại nút xóa sau khi hoàn thành yêu cầu
+    //                     this.disabled = false;
+    //                 }
+    //             }
+    //         } else {
+    //             // Người dùng đã hủy xác nhận
+    //             console.log('Delete cancelled');
+    //         }
+    //     });
+    // });
+
     // *Chỗ xử lý tạo danh mục mới
     handleCategoryForm ? handleCategoryForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -127,34 +184,66 @@ const displayCategories = async (categories) => {
         const title = document.getElementById('title').value.trim();
         const msgError = document.getElementById('categoryError');
 
-        // Kiểm tra xem categoryName có trống không
-        if (!title) {
-            msgError.innerHTML = '<span class="text-danger">Tên danh mục không được để trống</span>';
-            return;
-        } else {
-            msgError.innerHTML = '';
-            categoryError.innerHTML = '<span class="text-success">Thêm danh mục thành công</span>';
-        }
-
         try {
-            await axios.post(`${API_URL}categories`, {
+            const currentData = await axios.get(`${API_URL}categories.json`);
+            const currentCategories = Object.values(currentData.data || {});
+            console.log(currentCategories);
+
+            const nextId = currentCategories.length > 0 ? Math.max(...currentCategories.map(category => Number(category.id))) + 1 : 1;
+
+            // Sử dụng hàm set để gửi yêu cầu với ID được xác định trước
+            await axios.put(`${API_URL}categories/${nextId - 4}.json`, {
+                id: nextId,
                 title: title
             });
-            console.log('Added new category');
-            showAlertAndRedirect("Thêm danh mục mới thành công", "/cate-list")
+
+            console.log('Added new category with ID:', nextId);
+            showAlertAndRedirect("Thêm danh mục mới thành công", "/cate-list");
 
             await setTimeout(() => {
                 window.location.href = `/cate-list`;
-            }, 1500)
+            }, 1500);
         } catch (error) {
-            console.log(error.message);
+            console.error('Error adding new category:', error.message);
         }
-
     }) : "";
+
+
+
+    // handleCategoryForm ? handleCategoryForm.addEventListener('submit', async (e) => {
+    //     e.preventDefault();
+
+    //     const title = document.getElementById('title').value.trim();
+    //     const msgError = document.getElementById('categoryError');
+
+    //     // Kiểm tra xem categoryName có trống không
+    //     if (!title) {
+    //         msgError.innerHTML = '<span class="text-danger">Tên danh mục không được để trống</span>';
+    //         return;
+    //     } else {
+    //         msgError.innerHTML = '';
+    //         categoryError.innerHTML = '<span class="text-success">Thêm danh mục thành công</span>';
+    //     }
+
+    //     try {
+    //         await axios.post(`${API_URL}categories`, {
+    //             title: title
+    //         });
+    //         console.log('Added new category');
+    //         showAlertAndRedirect("Thêm danh mục mới thành công", "/cate-list")
+
+    //         await setTimeout(() => {
+    //             window.location.href = `/cate-list`;
+    //         }, 1500)
+    //     } catch (error) {
+    //         console.log(error.message);
+    //     }
+
+    // }) : "";
 };
 
 
-//* Chỗ xử lý sửa thông tin sản phẩm
+//* Chỗ xử lý sửa thông tin danh mục
 document.addEventListener("DOMContentLoaded", async function () {
     // Lấy id từ tham số truyền vào URL
     const urlParams = new URLSearchParams(window.location.search);
@@ -162,13 +251,22 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     if (categoryId) {
         try {
-            // Fetch dữ liệu danh mục từ API
-            const response = await axios.get(`${API_URL}categories/${categoryId}`);
+            const response = await axios.get(`${API_URL}categories.json`, {
+                params: {
+                    orderBy: '"id"',
+                    equalTo: categoryId,
+                    print: "pretty"
+                }
+            });
+
             const categoryData = response.data;
 
             // Hiển thị dữ liệu trong các ô input
-            if (categoryData) {
-                document.getElementById('title').value = categoryData.title;
+            if (categoryData && Object.keys(categoryData).length > 0) {
+                const categoryIdKey = Object.keys(categoryData)[0];
+                const category = categoryData[categoryIdKey];
+
+                document.getElementById('title').value = category.title;
                 // Các ô input khác tương tự
             } else {
                 console.log('Category data not found');
@@ -179,6 +277,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     } else {
         console.log('CategoryId is null or undefined');
     }
+
+
 
     // * Edit Category
     handleCategoryEditForm ? handleCategoryEditForm.addEventListener('submit', async (e) => {
@@ -194,14 +294,32 @@ document.addEventListener("DOMContentLoaded", async function () {
             msgError.innerHTML = '';
 
             try {
-                // Sử dụng phương thức PUT để cập nhật danh mục
-                await axios.put(`${API_URL}categories/${categoryId}`, {
-                    title: title
+                // Lấy danh sách các danh mục từ API
+                const response = await axios.get(`${API_URL}categories.json`, {
+                    params: {
+                        orderBy: '"id"',
+                        equalTo: categoryId,
+                        print: "pretty"
+                    }
                 });
 
-                // Sau khi cập nhật thành công, có thể chuyển hướng hoặc thực hiện các thao tác khác cần thiết
-                console.log('Updated category');
-                showAlertAndRedirect(`Cập nhật danh mục "${title}" thành công`, "/cate-list")
+                const categoryData = response.data;
+
+                // Kiểm tra xem categoryData có dữ liệu và có category với id tương ứng không
+                if (categoryData && Object.keys(categoryData).length > 0) {
+                    const categoryIdKey = Object.keys(categoryData)[0];
+                    const category = categoryData[categoryIdKey];
+
+                    // Sử dụng phương thức PATCH để cập nhật danh mục
+                    await axios.patch(`${API_URL}categories/${categoryIdKey}.json`, {
+                        title: title
+                    });
+
+                    console.log('Updated category');
+                    showAlertAndRedirect(`Cập nhật danh mục "${title}" thành công`, "/cate-list");
+                } else {
+                    console.log('Category data not found');
+                }
             } catch (error) {
                 console.log(error.message);
             }

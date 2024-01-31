@@ -356,22 +356,6 @@ async function fetchProductDetail(productId) {
 }
 
 
-// async function fetchProductDetail(productId) {
-//     const apiUrl = API_URL + `products/${productId}`;
-
-//     try {
-//         const response = await axios.get(apiUrl);
-
-//         if (response.status !== 200) {
-//             throw new Error(`HTTP error! Status: ${response.status}`);
-//         }
-
-//         return response.data;
-//     } catch (error) {
-//         console.error("Error fetching product detail:", error);
-//         throw error;
-//     }
-// }
 
 function displayProductDetail(product, categories) {
     const productDetailElement = document.querySelector("#product-detail");

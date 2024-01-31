@@ -6,7 +6,7 @@ let selectedValue = null;
 
 const loadCategories = async () => {
     try {
-        const response = await axios.get(`${API_URL}categories`);
+        const response = await axios.get(`${API_URL}categories.json`);
         const categories = response.data;
         // Gọi hàm để cập nhật dữ liệu cho select element
         updateCategoriesDropdown(categories);
