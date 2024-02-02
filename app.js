@@ -10,7 +10,7 @@ import * as stringFunctions from './Lab_6/index.js';
 
 const dataUppercase = stringFunctions.uppercaseString('hello');
 
-const dataLowercase = stringFunctions.lowercaseString('WORLD!');
+const dataLowercase = stringFunctions.lowercaseString('WORLD!')
 
 
 console.log(dataUppercase);
