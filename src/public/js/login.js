@@ -73,7 +73,7 @@ class Authentication {
 
     async getUser() {
         try {
-            const response = await axios.get(`${API_URL}users`);
+            const response = await axios.get(`${API_URL}users.json`);
             return response.data;
         } catch (error) {
             console.error('Error fetching users:', error.message);
@@ -135,30 +135,33 @@ class Authentication {
             } else if (password !== isPassword) {
                 alert("Mật khẩu và xác nhận mật khẩu không khớp");
             } else {
-                const user = {
-                    fullname,
-                    username,
-                    email,
-                    password,
-                };
-
                 try {
-                    const response = await axios.post(`${API_URL}users`, user);
+                    const currentData = await axios.get(`${API_URL}users.json`);
+                    const currentUsers = Object.values(currentData.data || {});
 
-                    if (response) {
-                        setTimeout(() => {
-                            alert("Đăng ký thành công!");
-                            window.location.href = "/signin";
-                        }, 0);
-                    } else {
-                        alert("Đăng ký thất bại có thể thông tin bị sai!");
-                    }
+                    const nextId = currentUsers.length > 0 ? Math.max(...currentUsers.map(user => Number(user.id))) + 1 : 1;
+
+                    await axios.put(`${API_URL}users/${nextId - 1}.json`, {
+                        fullname,
+                        username,
+                        email,
+                        password,
+                        id: nextId,
+                    });
+
+
+                    setTimeout(() => {
+                        alert("Đăng ký thành công!");
+                        window.location.href = "/signin";
+                    }, 0);
                 } catch (error) {
                     console.error('Error creating user:', error.message);
+                    alert("Đã xảy ra lỗi khi đăng ký người dùng. Vui lòng thử lại sau.");
                 }
             }
         });
     }
+
 
 
     updateUI() {

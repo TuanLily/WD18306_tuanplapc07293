@@ -1,18 +1,29 @@
-
 {
   "rules": {
     ".read": true,
     ".write": true,
+    
     "products": {
       ".indexOn": ["id"],
       "$productId": {
-        ".validate": "data.child('id').val() == $productId"
+        ".validate": "newData.child('id').isNumber() && newData.child('id').val() >= 0"
       }
     },
-      "categories": {
+    "categories": {
       ".read": true,
       ".write": true,
-      ".indexOn": ["id"]
+      ".indexOn": ["id"],
+      "$categoryId": {
+        ".validate": "newData.child('id').isNumber() && newData.child('id').val() >= 0"
+      }
+    },
+     "users": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": ["id"],
+      "$userId": {
+        ".validate": "newData.child('id').isNumber() && newData.child('id').val() >= 0"
+      }
     }
   }
 }
