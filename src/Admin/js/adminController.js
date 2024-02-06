@@ -79,8 +79,6 @@ const displayCategories = async (categories) => {
             if (categoryId) {
                 // Chuyển hướng đến trang /cate-edit với ID categoryId
                 window.location.href = `/cate-edit?id=${categoryId}`;
-
-                console.log(window.location.href = `/cate-edit?id=${categoryId}`);
             } else {
                 console.log('CategoryId is null or undefined');
             }
@@ -506,7 +504,6 @@ const renderDisplayProducts = async (products, categories) => {
             // Kiểm tra xem đã chọn file hay chưa
             if (inputImage.files.length > 0) {
                 const image = inputImage.files.item(0).name;
-                console.log(image);
                 document.getElementById('showImage').innerHTML = `<img src="/img/${image}" alt="" width="120">`;
             }
         }) : "";
@@ -555,9 +552,13 @@ const renderDisplayProducts = async (products, categories) => {
             hasError = true;
         }
 
+        if (!price) {
+            priceErr.innerHTML = '<span class="text-danger">Giá tiền không được để trống</span>';
+            hasError = true;
+        }
         // Kiểm tra xem giá có phải là số dương hay không
-        if (!price || isNaN(price) || parseFloat(price) <= 0) {
-            priceErr.innerHTML = '<span class="text-danger">Giá không hợp lệ</span>';
+        else if (!price || isNaN(price) || parseFloat(price) <= 0) {
+            priceErr.innerHTML = '<span class="text-danger">Giá không hợp lệ và giá không được là số âm</span>';
             hasError = true;
         }
 

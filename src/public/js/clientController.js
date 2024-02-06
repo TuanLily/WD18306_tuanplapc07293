@@ -359,7 +359,6 @@ async function fetchProductDetail(productId) {
         const productDataArray = Object.values(response.data); // Chuyển đổi thành mảng
         const productData = productDataArray[0]; // Lấy phần tử đầu tiên (vì chỉ có một phần tử)
 
-        console.log(productData);
 
         // Lưu ý: Bạn cần xử lý dữ liệu tại đây để trích xuất thông tin cụ thể của sản phẩm
 
@@ -1030,7 +1029,6 @@ document.getElementById('email').addEventListener('blur', validateEmail);
 // Hàm kiểm tra Họ và tên
 function validateFullName() {
     const fullName = document.getElementById('fullName').value.trim();
-    console.log(fullName);
     const fullNameError = document.getElementById('fullNameError');
 
     if (fullName === '') {
@@ -1043,7 +1041,6 @@ function validateFullName() {
 // Hàm kiểm tra Địa chỉ
 function validateAddress() {
     const address = document.getElementById('address').value.trim();
-    console.log(address);
 
     const addressError = document.getElementById('addressError');
 
@@ -1057,7 +1054,6 @@ function validateAddress() {
 // Hàm kiểm tra Số điện thoại
 function validatePhoneNumber() {
     const phoneNumber = document.getElementById('phoneNumber').value.trim();
-    console.log(phoneNumber);
     const phoneNumberError = document.getElementById('phoneNumberError');
 
     if (phoneNumber === '') {
@@ -1070,7 +1066,6 @@ function validatePhoneNumber() {
 // Hàm kiểm tra Email
 function validateEmail() {
     const email = document.getElementById('email').value.trim();
-    console.log(email);
     const emailError = document.getElementById('emailError');
 
     if (email === '') {
